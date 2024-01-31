@@ -1,0 +1,202 @@
+=== POOL REGISTRY ===
+
+LinearPower::__LinearPower_init() 0x892aea1f
+LinearPower::renounceOwnership() 0x715018a6
+LinearPower::transferOwnership(address) 0xf2fde38b
+
+PolynomialPower::__PolynomialPower_init(uint256,uint256,uint256) 0x4064b0fa
+PolynomialPower::changeCoefficients(uint256,uint256,uint256) 0x485d0831
+PolynomialPower::renounceOwnership() 0x715018a6
+PolynomialPower::transferOwnership(address) 0xf2fde38b
+
+ERC721Multiplier::__ERC721Multiplier_init(string,string) 0x3073d589
+ERC721Multiplier::approve(address,uint256) 0x095ea7b3
+ERC721Multiplier::changeToken(uint256,uint256,uint64) 0x4ccc2757
+ERC721Multiplier::lock(uint256) 0xdd467064
+ERC721Multiplier::mint(address,uint256,uint64,string) 0xaf2d2333
+ERC721Multiplier::renounceOwnership() 0x715018a6
+ERC721Multiplier::safeTransferFrom(address,address,uint256) 0x42842e0e
+ERC721Multiplier::safeTransferFrom(address,address,uint256,bytes) 0xb88d4fde
+ERC721Multiplier::setApprovalForAll(address,bool) 0xa22cb465
+ERC721Multiplier::setTokenURI(uint256,string) 0x162094c4
+ERC721Multiplier::transferFrom(address,address,uint256) 0x23b872dd
+ERC721Multiplier::transferOwnership(address) 0xf2fde38b
+ERC721Multiplier::unlock() 0xa69df4b5
+
+ERC721Expert::__ERC721Expert_init(string,string) 0x3cca1f2c
+ERC721Expert::approve(address,uint256) 0x095ea7b3
+ERC721Expert::burn(address) 0x89afcb44
+ERC721Expert::mint(address,string) 0xd0def521
+ERC721Expert::renounceOwnership() 0x715018a6
+ERC721Expert::safeTransferFrom(address,address,uint256) 0x42842e0e
+ERC721Expert::safeTransferFrom(address,address,uint256,bytes) 0xb88d4fde
+ERC721Expert::setApprovalForAll(address,bool) 0xa22cb465
+ERC721Expert::setTags(uint256,string[]) 0x7a6e9514
+ERC721Expert::setTokenURI(uint256,string) 0x162094c4
+ERC721Expert::transferFrom(address,address,uint256) 0x23b872dd
+ERC721Expert::transferOwnership(address) 0xf2fde38b
+
+TokenSaleProposal::__TokenSaleProposal_init(address) 0x13fb0521
+TokenSaleProposal::addToWhitelist((uint256,address[],string)[]) 0xce6c2d91
+TokenSaleProposal::buy(uint256,address,uint256) 0x2afaca20
+TokenSaleProposal::claim(uint256[]) 0x6ba4c138
+TokenSaleProposal::createTiers(((string,string),uint256,uint64,uint64,uint64,address,address[],uint256[],uint256,uint256,(uint256,uint64,uint64,uint64),(uint8,bytes)[])[]) 0x6a6effda
+TokenSaleProposal::lockParticipationNft(uint256,address,uint256[]) 0x1ec3f9b7
+TokenSaleProposal::lockParticipationTokens(uint256,address,uint256) 0x66813a3b
+TokenSaleProposal::mint(address,uint256) 0x40c10f19
+TokenSaleProposal::multicall(bytes[]) 0xac9650d8
+TokenSaleProposal::offTiers(uint256[]) 0x20274396
+TokenSaleProposal::recover(uint256[]) 0xc59b695a
+TokenSaleProposal::safeBatchTransferFrom(address,address,uint256[],uint256[],bytes) 0x2eb2c2d6
+TokenSaleProposal::safeTransferFrom(address,address,uint256,uint256,bytes) 0xf242432a
+TokenSaleProposal::setApprovalForAll(address,bool) 0xa22cb465
+TokenSaleProposal::setDependencies(address,bytes) 0x69130451
+TokenSaleProposal::setInjector(address) 0x8cb941cc
+TokenSaleProposal::unlockParticipationNft(uint256,address,uint256[]) 0x9471f309
+TokenSaleProposal::unlockParticipationTokens(uint256,address,uint256) 0x78ee27d7
+TokenSaleProposal::vestingWithdraw(uint256[]) 0xe2bdc496
+
+DistributionProposal::__DistributionProposal_init(address) 0x90b7be52
+DistributionProposal::claim(address,uint256[]) 0x45718278
+DistributionProposal::execute(uint256,address,uint256) 0xc45e0ae6
+
+GovUserKeeper::__GovUserKeeper_init(address,address,uint256,uint256) 0x5b75f393
+GovUserKeeper::delegateNfts(address,address,uint256[]) 0xbfb1a57d
+GovUserKeeper::delegateNftsTreasury(address,uint256[]) 0x6ad6d3c1
+GovUserKeeper::delegateTokens(address,address,uint256) 0x9161babb
+GovUserKeeper::delegateTokensTreasury(address,uint256) 0x69b5330b
+GovUserKeeper::depositNfts(address,address,uint256[]) 0x9693caad
+GovUserKeeper::depositTokens(address,address,uint256) 0x39dc5ef2
+GovUserKeeper::lockNfts(address,uint8,uint256[]) 0x3b389164
+GovUserKeeper::lockTokens(uint256,address,uint256) 0x154b3db0
+GovUserKeeper::renounceOwnership() 0x715018a6
+GovUserKeeper::setERC20Address(address) 0x41bec0d2
+GovUserKeeper::setERC721Address(address,uint256,uint256) 0x37e5e863
+GovUserKeeper::transferOwnership(address) 0xf2fde38b
+GovUserKeeper::undelegateNfts(address,address,uint256[]) 0x37267d4c
+GovUserKeeper::undelegateNftsTreasury(address,uint256[]) 0x39be038b
+GovUserKeeper::undelegateTokens(address,address,uint256) 0x0ae1398e
+GovUserKeeper::undelegateTokensTreasury(address,uint256) 0x86be8d2d
+GovUserKeeper::unlockNfts(uint256[]) 0x7be49fe3
+GovUserKeeper::unlockTokens(uint256,address) 0x7fde4424
+GovUserKeeper::updateMaxTokenLockedAmount(uint256[],address) 0x5f884296
+GovUserKeeper::updateNftPowers(uint256[]) 0x30132f5e
+GovUserKeeper::withdrawNfts(address,address,uint256[]) 0x1f96f376
+GovUserKeeper::withdrawTokens(address,address,uint256) 0x5e35359e
+
+GovValidators::__GovValidators_init(string,string,(uint64,uint64,uint128),address[],uint256[]) 0xac2901d6
+GovValidators::cancelVoteExternalProposal(uint256) 0xea1941d0
+GovValidators::cancelVoteInternalProposal(uint256) 0x5478197e
+GovValidators::changeBalances(uint256[],address[]) 0x62a4107d
+GovValidators::changeSettings(uint64,uint64,uint128) 0xb395fec0
+GovValidators::createExternalProposal(uint256,(uint64,uint64,uint128)) 0xdc2a7714
+GovValidators::createInternalProposal(uint8,string,bytes) 0x9661803d
+GovValidators::executeExternalProposal(uint256) 0x430c885a
+GovValidators::executeInternalProposal(uint256) 0x65f3f23f
+GovValidators::monthlyWithdraw(address[],uint256[],address) 0x3271f009
+GovValidators::renounceOwnership() 0x715018a6
+GovValidators::transferOwnership(address) 0xf2fde38b
+GovValidators::voteExternalProposal(uint256,uint256,bool) 0xba877b80
+GovValidators::voteInternalProposal(uint256,uint256,bool) 0x5a34c7e1
+
+GovSettings::__GovSettings_init(address,address,address,(bool,bool,bool,uint64,uint64,uint64,uint128,uint128,uint256,uint256,(address,uint256,uint256,uint256),string)[],address[]) 0x37913eed
+GovSettings::addSettings((bool,bool,bool,uint64,uint64,uint64,uint128,uint128,uint256,uint256,(address,uint256,uint256,uint256),string)[]) 0x6a11e769
+GovSettings::changeExecutors(address[],uint256[]) 0xf7e1ef01
+GovSettings::editSettings(uint256[],(bool,bool,bool,uint64,uint64,uint64,uint128,uint128,uint256,uint256,(address,uint256,uint256,uint256),string)[]) 0x2d141cdd
+GovSettings::renounceOwnership() 0x715018a6
+GovSettings::transferOwnership(address) 0xf2fde38b
+
+GovPool::__GovPool_init((address,address,address,address,address,address),address,bool,uint256,string,string) 0xaf6722dd
+GovPool::cancelVote(uint256) 0xbacbe2da
+GovPool::changeBABTRestriction(bool) 0x2050a31b
+GovPool::changeVerifier(address) 0xcf04fb94
+GovPool::changeVotePower(address) 0xcfd9c3c3
+GovPool::claimMicropoolRewards(uint256[],address,address) 0x7b0e1203
+GovPool::claimRewards(uint256[],address) 0x0520537f
+GovPool::createProposal(string,(address,uint256,bytes)[],(address,uint256,bytes)[]) 0xda1c6cfa
+GovPool::createProposalAndVote(string,(address,uint256,bytes)[],(address,uint256,bytes)[],uint256,uint256[]) 0xee0e5215
+GovPool::delegate(address,uint256,uint256[]) 0x46d0b0b9
+GovPool::delegateTreasury(address,uint256,uint256[]) 0x39588f1e
+GovPool::deposit(uint256,uint256[]) 0xde3ab781
+GovPool::editDescriptionURL(string) 0x0dbf1c47
+GovPool::execute(uint256) 0xfe0d94c1
+GovPool::moveProposalToValidators(uint256) 0x2db47bdd
+GovPool::multicall(bytes[]) 0xac9650d8
+GovPool::onERC1155BatchReceived(address,address,uint256[],uint256[],bytes) 0xbc197c81
+GovPool::onERC1155Received(address,address,uint256,uint256,bytes) 0xf23a6e61
+GovPool::onERC721Received(address,address,uint256,bytes) 0x150b7a02
+GovPool::saveOffchainResults(string,bytes) 0x41c47e3e
+GovPool::setCreditInfo(address[],uint256[]) 0xbaa7652f
+GovPool::setDependencies(address,bytes) 0x69130451
+GovPool::setInjector(address) 0x8cb941cc
+GovPool::setNftMultiplierAddress(address) 0xa43040eb
+GovPool::transferCreditAmount(address[],uint256[],address) 0xc1e09f97
+GovPool::undelegate(address,uint256,uint256[]) 0x7810436a
+GovPool::undelegateTreasury(address,uint256,uint256[]) 0xb6b90df4
+GovPool::unlock(address) 0x2f6c493c
+GovPool::vote(uint256,bool,uint256,uint256[]) 0x544df02c
+GovPool::withdraw(address,uint256,uint256[]) 0xfb8c5ef0
+
+=== CONTRACTS REGISTRY ===
+
+UserRegistry::__UserRegistry_init(string) 0x609404f2
+UserRegistry::addOwners(address[]) 0x6c46a2c5
+UserRegistry::agreeToPrivacyPolicy(bytes) 0xd9ee212a
+UserRegistry::changeProfile(string) 0x482b390f
+UserRegistry::changeProfileAndAgreeToPrivacyPolicy(string,bytes) 0x2cb83257
+UserRegistry::removeOwners(address[]) 0xa9a5e3af
+UserRegistry::renounceOwnership() 0x715018a6
+UserRegistry::setPrivacyPolicyDocumentHash(bytes32) 0xc1bbeefe
+
+PoolFactory::deployGovPool((((bool,bool,bool,uint64,uint64,uint64,uint128,uint128,uint256,uint256,(address,uint256,uint256,uint256),string)[],address[]),(string,string,(uint64,uint64,uint128),address[],uint256[]),(address,address,uint256,uint256),(string,string,address[],uint256,uint256,uint256[]),(uint8,bytes,address),address,bool,string,string)) 0x0cc3c11c
+PoolFactory::setDependencies(address,bytes) 0x69130451
+PoolFactory::setInjector(address) 0x8cb941cc
+
+PoolRegistry::__MultiOwnablePoolContractsRegistry_init() 0xa148c7ff
+PoolRegistry::addOwners(address[]) 0x6c46a2c5
+PoolRegistry::addProxyPool(string,address) 0x09ae152b
+PoolRegistry::injectDependenciesToExistingPools(string,uint256,uint256) 0x24d6780f
+PoolRegistry::injectDependenciesToExistingPoolsWithData(string,bytes,uint256,uint256) 0x52837c41
+PoolRegistry::protectPoolFunctions(string,bytes4[]) 0xadab6520
+PoolRegistry::removeOwners(address[]) 0xa9a5e3af
+PoolRegistry::renounceOwnership() 0x715018a6
+PoolRegistry::setDependencies(address,bytes) 0x69130451
+PoolRegistry::setInjector(address) 0x8cb941cc
+PoolRegistry::setNewImplementations(string[],address[]) 0x05c05408
+PoolRegistry::toggleSphereXEngine(bool) 0x419aa023
+PoolRegistry::unprotectPoolFunctions(string,bytes4[]) 0x29809f7d
+
+ERC721Expert::__ERC721Expert_init(string,string) 0x3cca1f2c
+ERC721Expert::approve(address,uint256) 0x095ea7b3
+ERC721Expert::burn(address) 0x89afcb44
+ERC721Expert::mint(address,string) 0xd0def521
+ERC721Expert::renounceOwnership() 0x715018a6
+ERC721Expert::safeTransferFrom(address,address,uint256) 0x42842e0e
+ERC721Expert::safeTransferFrom(address,address,uint256,bytes) 0xb88d4fde
+ERC721Expert::setApprovalForAll(address,bool) 0xa22cb465
+ERC721Expert::setTags(uint256,string[]) 0x7a6e9514
+ERC721Expert::setTokenURI(uint256,string) 0x162094c4
+ERC721Expert::transferFrom(address,address,uint256) 0x23b872dd
+ERC721Expert::transferOwnership(address) 0xf2fde38b
+
+PriceFeed::__PriceFeed_init((uint8,address,uint24)[]) 0x3556f484
+PriceFeed::addOwners(address[]) 0x6c46a2c5
+PriceFeed::addPathTokens(address[]) 0xf973dc01
+PriceFeed::removeOwners(address[]) 0xa9a5e3af
+PriceFeed::removePathTokens(address[]) 0x5de49e39
+PriceFeed::renounceOwnership() 0x715018a6
+PriceFeed::setDependencies(address,bytes) 0x69130451
+PriceFeed::setInjector(address) 0x8cb941cc
+PriceFeed::setPoolTypes((uint8,address,uint24)[]) 0x3cbc6757
+
+CoreProperties::__CoreProperties_init((uint128,uint128,uint128,uint128,uint128)) 0x40e037f1
+CoreProperties::addOwners(address[]) 0x6c46a2c5
+CoreProperties::removeOwners(address[]) 0xa9a5e3af
+CoreProperties::renounceOwnership() 0x715018a6
+CoreProperties::setCoreParameters((uint128,uint128,uint128,uint128,uint128)) 0xc4b85e4c
+CoreProperties::setDEXECommissionPercentages(uint128) 0x7f5070fa
+CoreProperties::setDependencies(address,bytes) 0x69130451
+CoreProperties::setGovVotesLimit(uint128) 0xd4a4bea5
+CoreProperties::setInjector(address) 0x8cb941cc
+CoreProperties::setTokenSaleProposalCommissionPercentage(uint128) 0x07914c59
+CoreProperties::setVoteRewardsPercentages(uint128,uint128) 0x2bc88373
