@@ -49,14 +49,20 @@ class Builder {
         }
     }
 
-    async setPatterns() {
+    async setPatterns(skip = 0) {
         const [admin] = await hre.ethers.getSigners();
         const coder = new hre.ethers.utils.AbiCoder();
         let patternsBN = this.patterns.map((x) => hre.ethers.BigNumber.from(x));
 
-        let startingPosition = 0;
-        while (startingPosition < patternsBN.length) {
-            let block = patternsBN.slice(startingPosition, startingPosition + SLOTS_MAX);
+        let txCounter = 0;
+        while (txCounter * SLOTS_MAX < patternsBN.length) {
+            if (skip > 0) {
+                txCounter++;
+                console.log(txCounter, "skipped:");
+                skip--;
+                continue;
+            }
+            let block = patternsBN.slice(txCounter * SLOTS_MAX, txCounter * SLOTS_MAX + SLOTS_MAX);
             let result = coder.encode(["uint[]"], [block]);
             let data = "0x04539062" + result.substring(2);
             
@@ -66,8 +72,8 @@ class Builder {
                 data: data
             });
             let receipt = await tx.wait();
-            console.log("TxHash:", receipt.transactionHash);
-            startingPosition += SLOTS_MAX;
+            txCounter++;
+            console.log(txCounter, "txHash:", receipt.transactionHash);
         }
     }
 }
