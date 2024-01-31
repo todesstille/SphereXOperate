@@ -5,10 +5,8 @@ async function main() {
   const builder = new Builder();
 
   const {addDelegateBatch}  = require("./patterns/schemes");
-  addDelegateBatch(builder, 10, 10);
+  addDelegateBatch(builder, 21, 21);
 
-  // console.log(builder.getPatterns())
-  // console.log(builder)
   await builder.setPatterns();
 }
 

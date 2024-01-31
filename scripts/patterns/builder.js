@@ -66,11 +66,12 @@ class Builder {
                 data: data
             });
             let receipt = await tx.wait();
-            console.log(receipt)
+            console.log("TxHash:", receipt.transactionHash);
             startingPosition += SLOTS_MAX;
         }
     }
 }
+
 
 module.exports = {
     Builder,

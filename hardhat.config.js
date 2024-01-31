@@ -19,10 +19,14 @@ module.exports = {
     chapel: {
       url: process.env.BSC_TESTNET_URL,
       accounts: [process.env.PRIVATE_KEY],
+      gasMultiplier: 1.2,
+      gasPrice: 6000000000,
+
     },
     bsc: {
       url: process.env.BSC_URL,
-      accounts: [process.env.PRIVATE_KEY]
+      accounts: [process.env.PRIVATE_KEY],
+      gasMultiplier: 1.2,
     },
   },
 };
