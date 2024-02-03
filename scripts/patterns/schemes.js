@@ -1,5 +1,16 @@
+const assert = require('assert');
+
+function splitIntToBool(n, length) {
+    let result = [];
+    while (length > 0) {
+        result.push((n % 2) == 1)
+        n = n >> 1;
+        length--;
+    }
+    return result;
+}
+
 function addDelegate(builder, cycles1, cycles2, withDeposit, withUpdate1, withUpdate2) {
-    builder.init();
     builder.enter("ac9650d8"); // GovPool::multicall
 
         if (withDeposit) {
@@ -43,12 +54,12 @@ function addDelegate(builder, cycles1, cycles2, withDeposit, withUpdate1, withUp
 }
 
 function addDelegateBatch(builder, a, b) {
-    for (let i = 1; i < a; i++) {
-        for (let j = 1; j < b; j++) {
+    for (let i = 0; i <= a; i++) {
+        for (let j = 0; j <= b; j++) {
             for (let k = 0; k < 8; k++) {
-                let withDeposit = (k % 2) == 1;
-                let withUpdate1 = ((k >> 1) % 2) == 1;
-                let withUpdate2 = ((k >> 2) % 2) == 1;
+                let [withDeposit, withUpdate1, withUpdate2] = splitIntToBool(k, 3)
+
+                builder.init();
                 addDelegate(builder, i, j, withDeposit, withUpdate1, withUpdate2);
             }
         }    
@@ -56,8 +67,6 @@ function addDelegateBatch(builder, a, b) {
 }
 
 function addWhiteList(builder, cycles, withValidators) {
-    builder.init();
-
     builder.enter("fe0d94c1"); // GovPool::execute
 
         if (withValidators) {
@@ -88,14 +97,15 @@ function addWhiteList(builder, cycles, withValidators) {
 // ToDo: delete onchain patterns with calling creteWhitelist but with no mints
 function addWhiteListBatch(builder, a) {
     for (let i = 0; i <= a; i++) {
-        addWhiteList(builder, i, true);
+        builder.init();
         addWhiteList(builder, i, false);
+
+        builder.init();
+        addWhiteList(builder, i, true);
     }
 }
 
 function addCreteMultiplierNft(builder, cycles, withValidators) {
-    builder.init();
-
     builder.enter("fe0d94c1"); // GovPool::execute
 
         if (withValidators) {
@@ -114,13 +124,121 @@ function addCreteMultiplierNft(builder, cycles, withValidators) {
 // ATTENTION! Empty "execute" is here (maybe plus executeExternalProposal)
 function addCreteMultiplierNftBatch(builder, a) {
     for (let i = 0; i <= a; i++) {
-        addCreteMultiplierNft(builder, i, true);
+        builder.init();
         addCreteMultiplierNft(builder, i, false);
+
+        builder.init();
+        addCreteMultiplierNft(builder, i, true);
     }
+}
+
+function addCancelVote(builder, cycles, withUpdate1, withTokenCancel) {
+    builder.enter("bacbe2da"); // GovPool::cancelVote
+
+        for (let i = 0; i < cycles; i++) {
+            builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
+            builder.exit("7fde4424");
+        }
+
+        if (withUpdate1) {
+            builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
+            builder.exit("5f884296");    
+        }
+
+        if (withTokenCancel) {
+            builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
+            builder.exit("7fde4424");
+        }
+
+        builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
+        builder.exit("5f884296");    
+
+    builder.exit("bacbe2da");
+}
+
+function addVote(builder, cycles, withUpdate1, withLockTokens, withLockNfts) {
+    builder.enter("544df02c"); // GovPool::vote
+
+        for (let i = 0; i < cycles; i++) {
+            builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
+            builder.exit("7fde4424");
+        }
+
+        if (withUpdate1) {
+            builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
+            builder.exit("5f884296");    
+        }
+
+        builder.enter("30132f5e"); // GovUserKeeper::updateNftPowers
+        builder.exit("30132f5e");    
+
+        if (withLockTokens) {
+            builder.enter("154b3db0"); // GovUserKeeper::lockTokens
+            builder.exit("154b3db0");
+        }
+
+        if (withLockNfts) {
+            builder.enter("3b389164"); // GovUserKeeper::lockNfts
+            builder.exit("3b389164");
+        }
+
+    builder.exit("544df02c");
+}
+
+function addDeposit(builder, withTokensDeposit, withNftsDeposit) {
+
+    assert(withTokensDeposit || withNftsDeposit);
+
+    builder.enter("de3ab781"); // GovPool::deposit
+
+        if (withTokensDeposit) {
+            builder.enter("39dc5ef2"); // GovUserKeeper::depositTokens
+            builder.exit("39dc5ef2");    
+        }
+
+        if (withNftsDeposit) {
+            builder.enter("9693caad"); // GovUserKeeper::depositNfts
+            builder.exit("9693caad");
+        }
+
+    builder.exit("de3ab781");
+}
+
+function addMulticallVote(
+    builder, cancelVoteList, depositList, voteList) {
+
+    builder.enter("ac9650d8"); // GovPool::multicall
+
+        if (cancelVoteList.length > 0) {
+            // cycles = unlockTokens number
+            let [cycles, withUpdate1, withTokenCancel] = cancelVoteList;
+            addCancelVote(builder, cycles, withUpdate1, withTokenCancel);
+        }
+
+        if (depositList.length > 0) {
+            let [withTokensDeposit, withNftsDeposit] = depositList;
+            addDeposit(builder, withTokensDeposit, withNftsDeposit);
+        }
+
+        if (voteList.length > 0) {
+            let [cycles, withUpdate1, withLockTokens, withLockNfts] = voteList;
+            addVote(builder, cycles, withUpdate1, withLockTokens, withLockNfts);
+        }
+    builder.exit("ac9650d8");
+
 }
 
 module.exports = {
     addDelegateBatch,
     addWhiteListBatch,
     addCreteMultiplierNftBatch,
+
+    splitIntToBool,
+
+    addDelegate,
+    addWhiteList,
+    addCreteMultiplierNft,
+    addCancelVote,
+    addDeposit,
+    addMulticallVote,
 };

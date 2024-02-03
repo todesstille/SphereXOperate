@@ -5,11 +5,12 @@ async function main() {
   const builder = new Builder();
 
   const {addDelegateBatch, addWhiteListBatch, addCreteMultiplierNftBatch}  = require("./patterns/schemes");
-  addDelegateBatch(builder, 21, 21);
+  addDelegateBatch(builder, 41, 41);
   // addWhiteListBatch(builder, 500);
   // addCreteMultiplierNftBatch(builder, 500);
 
-  await builder.setPatterns();
+  // await builder.setPatterns();
+  console.log(builder.getPatterns().length)
 }
 
 main().catch((error) => {

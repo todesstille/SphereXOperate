@@ -49,6 +49,16 @@ class Builder {
         }
     }
 
+    getCalldata() {
+        const coder = new hre.ethers.utils.AbiCoder();
+        let patternsBN = this.patterns.map((x) => hre.ethers.BigNumber.from(x));
+
+        let result = coder.encode(["uint[]"], [patternsBN]);
+        let data = "0x04539062" + result.substring(2);
+
+        return data;
+    }
+
     async setPatterns(skip = 0) {
         const [admin] = await hre.ethers.getSigners();
         const coder = new hre.ethers.utils.AbiCoder();
