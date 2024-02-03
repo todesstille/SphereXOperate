@@ -10,37 +10,31 @@ function splitIntToBool(n, length) {
     return result;
 }
 
+function addUnlockTokens(builder, unlockTokenCycles, withUpdate) {
+    for (let i = 0; i < unlockTokenCycles; i++) {
+        builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
+        builder.exit("7fde4424");
+    }
+
+    if (withUpdate) {
+        builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
+        builder.exit("5f884296");    
+    }
+}
+
 function addDelegate(builder, cycles1, cycles2, withDeposit, withUpdate1, withUpdate2) {
     builder.enter("ac9650d8"); // GovPool::multicall
 
         if (withDeposit) {
-            builder.enter("de3ab781") // GovPool::deposit
-                builder.enter("39dc5ef2"); // GovUserKeeper::depositTokens
-                builder.exit("39dc5ef2");
-            builder.exit("de3ab781")
+            let withTokens = true;
+            let withNft = false;
+            addDeposit(builder, withTokens, withNft);
         }
 
         builder.enter("46d0b0b9"); // GovPool::delegate
 
-            for (let i = 0; i < cycles1; i++) {
-                builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
-                builder.exit("7fde4424");
-            }
-
-            if (withUpdate1) {
-                builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
-                builder.exit("5f884296");
-            }
-
-            for (let i = 0; i < cycles2; i++) {
-                builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
-                builder.exit("7fde4424");
-            }
-
-            if (withUpdate2) {
-                builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
-                builder.exit("5f884296");
-            }
+            addUnlockTokens(builder, cycles1, withUpdate1);
+            addUnlockTokens(builder, cycles2, withUpdate2);
 
             builder.enter("30132f5e"); // GovUserKeeper::updateNftPowers
             builder.exit("30132f5e");
@@ -114,7 +108,7 @@ function addCreteMultiplierNft(builder, cycles, withValidators) {
         }
 
         for (let i = 0; i < cycles; i++) {
-            builder.enter("af2d2333"); // TokenSaleProposal::mint
+            builder.enter("af2d2333"); // ERC721Multiplier::mint
             builder.exit("af2d2333");
         }
 
@@ -135,39 +129,16 @@ function addCreteMultiplierNftBatch(builder, a) {
 function addCancelVote(builder, cycles, withUpdate1, withTokenCancel) {
     builder.enter("bacbe2da"); // GovPool::cancelVote
 
-        for (let i = 0; i < cycles; i++) {
-            builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
-            builder.exit("7fde4424");
-        }
-
-        if (withUpdate1) {
-            builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
-            builder.exit("5f884296");    
-        }
-
-        if (withTokenCancel) {
-            builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
-            builder.exit("7fde4424");
-        }
-
-        builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
-        builder.exit("5f884296");    
+        addUnlockTokens(builder, cycles, withUpdate1);
+        addUnlockTokens(builder, withTokenCancel ? 1 : 0, true);
 
     builder.exit("bacbe2da");
 }
 
-function addVote(builder, cycles, withUpdate1, withLockTokens, withLockNfts) {
+function addVote(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLockNfts) {
     builder.enter("544df02c"); // GovPool::vote
 
-        for (let i = 0; i < cycles; i++) {
-            builder.enter("7fde4424"); // GovUserKeeper::unlockTokens
-            builder.exit("7fde4424");
-        }
-
-        if (withUpdate1) {
-            builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
-            builder.exit("5f884296");    
-        }
+        addUnlockTokens(builder, unlockTokenCycles, withUpdate1);
 
         builder.enter("30132f5e"); // GovUserKeeper::updateNftPowers
         builder.exit("30132f5e");    
