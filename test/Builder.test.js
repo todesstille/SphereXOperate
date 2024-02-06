@@ -377,6 +377,50 @@ describe("Test Builder", function () {
       lastPattern = p[p.length - 1];
       expect(patterns.indexOf(lastPattern)).to.equal(patterns.length - 1);
     });
+
+    it("Batch MulticallVote", async () => {
+      let builder = new Builder();
+      const {addMulticallVoteBatch, addMulticallVote} = require("../scripts/patterns/schemes");
+      addMulticallVoteBatch(builder, 5);
+      let patterns = builder.getPatterns();
+
+      let b
+      let workingPatterns = 
+        [
+          [[], [], [1, true, true, false]],
+          [[], [], [0, true, false, false]],
+          [[], [], [0, false, true, false]],
+          [[], [], [2, true, true, false]],
+          [[], [true, false], [1, true, true, false]],
+          [[0, false, true], [], [0, true, true, false]],
+          [[0, false, true], [true, false], [0, true, true, false]],
+          [[], [], [5, true, true, false]],
+          [[], [], [3, true, true, false]],
+          [[], [true, false], [0, false, true, false]],
+          [[], [], [1, false, true, false]],
+          [[0, false, true], [], [0, true, true, false]],
+          [[], [], [1, true, false, false]],
+          [[0, false, true], [], [0, false, true, false]],
+          [[], [], [2, false, true, false]],
+          [[], [], [4, true, true, false]],
+          [[false, false, true], [true, false], [0, false, true, false]],
+          [[1, true, true], [], [0, false, true, false]],
+          [[1, true, true], [], [0, true, true, false]]
+        ];
+      for (workingPattern of workingPatterns) {
+        b = new Builder();
+        addMulticallVote(
+          b, 
+          workingPattern[0],
+          workingPattern[1],
+          workingPattern[2],
+        );
+        let testPatterns = b.getPatterns()
+        for (testPattern of testPatterns) {
+          expect(patterns.indexOf(testPattern)).to.not.equal(-1);
+        }  
+      }
+    });
   });
 
   describe("Batch compare function result with predefined string", function () {

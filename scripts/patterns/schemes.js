@@ -196,6 +196,55 @@ function addMulticallVote(
             addVote(builder, cycles, withUpdate1, withLockTokens, withLockNfts);
         }
     builder.exit("ac9650d8");
+}
+
+function addMulticallVoteBatch(builder, unlockTokenMaxNumber) {
+    for (let i = 0; i <= unlockTokenMaxNumber; i++) {
+        builder.init();
+        addCancelVote(builder, i, false, true);
+
+        builder.init();
+        addCancelVote(builder, i, true, true);
+    }
+
+    builder.init();
+    addDeposit(builder, true, false);
+
+    for (let i = 0; i <= unlockTokenMaxNumber; i++) {
+        for (let j = 0; j < 4; j++) {
+            let [withUpdate, areTokensLocked] = splitIntToBool(j, 2)
+
+            builder.init();
+            addMulticallVote(builder, [], [], [i, withUpdate, areTokensLocked, false]);
+        }
+    }
+
+    for (let i = 0; i <= unlockTokenMaxNumber; i++) {
+        for (let j = 0; j < 4; j++) {
+            let [withUpdate, areTokensLocked] = splitIntToBool(j, 2)
+
+            builder.init();
+            addMulticallVote(builder, [], [true, false], [i, withUpdate, areTokensLocked, false]);
+        }
+    }
+
+    for (let i = 0; i <= unlockTokenMaxNumber; i++) {
+        for (let j = 0; j < 8; j++) {
+            let [withUpdate1, withUpdate2, areTokensLocked] = splitIntToBool(j, 3)
+            
+            builder.init();
+            addMulticallVote(builder, [i, withUpdate1, true], [], [0, withUpdate2, areTokensLocked, false])
+        }
+    }
+
+    for (let i = 0; i <= unlockTokenMaxNumber; i++) {
+        for (let j = 0; j < 8; j++) {
+            let [withUpdate1, withUpdate2, areTokensLocked] = splitIntToBool(j, 3)
+            
+            builder.init();
+            addMulticallVote(builder, [i, withUpdate1, true], [true, false], [0, withUpdate2, areTokensLocked, false])
+        }
+    }
 
 }
 
@@ -203,6 +252,7 @@ module.exports = {
     addDelegateBatch,
     addWhiteListBatch,
     addCreteMultiplierNftBatch,
+    addMulticallVoteBatch,
 
     splitIntToBool,
 
