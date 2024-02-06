@@ -316,8 +316,31 @@ describe("Test Builder", function () {
         [0, true, true, false] // number of unlock tokens, if updates max, if tokenLocked, if nfts locked
       );
       expect(builder.getCalldata()).to.equal("0x045390620000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a0000000000f754e17f810c6384c1c484aabad4d7a14fc374439a93c37dca740700000000003a88ece81a466da8aa7a551c9fecd77a1b760fae8141ab87619bc9000000000043ae123d9154f943c065cb7ceb4196b267cc67c775919d45d068d00000000000434e7499c69a29276117148984bec2955acd761952c1f285cbc0c60000000000668a04d23e66d3d90904454194301ef20cc7c0a33ad8c1fde854800000000000e01da221102b06ef7284065faf5163e412d1c88cf9da825fa5c0fa00000000006c0a3d7ba1cfa4b215cce8dff8084e60d13e6f03ebfd9afe14469c0000000000831475c79452aa5cdaef039d7c958dd4b202a83da854e2518d9768000000000099d4a97f1885e03b5d930cb1b7cfc209d459ac9c1577203e698ad00000000000d9444d2f9dcd9e4d08749a00cea82b8bc8533ed32da2c7520a66e1");
+    });
 
-    });      
+    it("Add Withdraw", async () => {
+      let builder = new Builder();
+      const {addWithdraw} = require("../scripts/patterns/schemes");
+      
+      addWithdraw(builder, 1, true);
+      expect(builder.getCalldata()).to.equal("0x045390620000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000400000000001beaa12b112ad7273f4fad0563d02a592077c5d1b0321e2cd17c4a0000000000cc4f96fb7ae10446662787abb8d81ae51d836e89e406120dd24a1600000000001e230ef997ded2829d5aca4aa4c6af9182b23fcf2ee8c3355bde200000000000a705944023e1858ffa14d314c3efe280274411aac9b71db2c20e2c");
+
+      builder = new Builder();
+      addWithdraw(builder, 0, true);
+      expect(builder.getCalldata()).to.equal("0x04539062000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000030000000000eba34e54bc46e93b1d6d94b21aaa33451fefd75b909df427b2e19c0000000000f932ba65786f56c52db6654f4cc0ede6c7b871ba9c257eba854d5d000000000031f7c23ff27c5c768ed392c422fea3c14bf02c2bbbaaf77d07324a");
+
+      builder = new Builder();
+      addWithdraw(builder, 0, false);
+      expect(builder.getCalldata()).to.equal("0x0453906200000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000096c8c7eab6455b8510c4fe7c43c585cdf0a4c6d5227cdaf5dc0d2000000000003023cf1b2a42523ba6a82ea9279eba9f8cea7d26fddfc4de4a155c");
+
+      builder = new Builder();
+      addWithdraw(builder, 1, false);
+      expect(builder.getCalldata()).to.equal("0x045390620000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000300000000001beaa12b112ad7273f4fad0563d02a592077c5d1b0321e2cd17c4a0000000000a4990c54ac7fc065800bcc3b48a9ef02140cbc3f965098b3027f7000000000007882ac6000b49366235e9979b784fd0bf4d22c5a539675310bde05");
+
+      builder = new Builder();
+      addWithdraw(builder, 3, true);
+      expect(builder.getCalldata()).to.equal("0x045390620000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000600000000001beaa12b112ad7273f4fad0563d02a592077c5d1b0321e2cd17c4a000000000053d6de97341e9469b921364d023569fde0ab75910a5847896e624300000000004ffa6732aa46645d17411bc7455d66bce0d7f7b93e884716a4d77f0000000000bf7b90679a8f9a4e739bd6b8914cb699e0e969813b5157e42d1d8300000000008c71e2eba1d498db0cbc5eeea5d853aa82fac9dc4860321e5932dc00000000005aa257f99054e1c2ca58a9de7f2b11748a12e628dc7cfe9931f12e");
+    });
   });
 
   describe("Batch patterns", function () {
@@ -421,6 +444,49 @@ describe("Test Builder", function () {
         }  
       }
     });
+
+    it("Batch Withdraw", async () => {
+      let builder = new Builder();
+      const {addWithdraw, addWithdrawBatch} = require("../scripts/patterns/schemes");
+      addWithdrawBatch(builder, 10);
+      let patterns = builder.getPatterns();
+
+      let b
+      let workingPatterns = 
+        [
+          [0, true],
+          [1, true],
+          [0, false],
+          [1, false],
+          [3, true]
+        ];
+      for (workingPattern of workingPatterns) {
+        b = new Builder();
+        addWithdraw(
+          b, 
+          workingPattern[0],
+          workingPattern[1]
+        );
+        let testPatterns = b.getPatterns()
+        for (testPattern of testPatterns) {
+          expect(patterns.indexOf(testPattern)).to.not.equal(-1);
+        }  
+      }
+
+      b = new Builder();
+      addWithdraw(b, 0, false);
+      let p = b.getPatterns()
+      let lastPattern = p[p.length - 1];
+      expect(patterns.indexOf(lastPattern)).to.not.equal(-1);
+
+      b = new Builder();
+      addWithdraw(b, 10, true);
+      p = b.getPatterns()
+      lastPattern = p[p.length - 1];
+      expect(patterns.indexOf(lastPattern)).to.equal(patterns.length - 1);
+
+    });
+
   });
 
   describe("Batch compare function result with predefined string", function () {

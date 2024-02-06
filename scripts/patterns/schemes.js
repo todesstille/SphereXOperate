@@ -245,7 +245,28 @@ function addMulticallVoteBatch(builder, unlockTokenMaxNumber) {
             addMulticallVote(builder, [i, withUpdate1, true], [true, false], [0, withUpdate2, areTokensLocked, false])
         }
     }
+}
 
+function addWithdraw(builder, unlockTokensCycles, withUpdate) {
+    
+    builder.enter("fb8c5ef0"); // GovPool::withdraw
+
+        addUnlockTokens(builder, unlockTokensCycles, withUpdate)
+
+        builder.enter("5e35359e") // GovUserKeeper::withdrawTokens
+        builder.exit("5e35359e")
+
+    builder.exit("fb8c5ef0");
+}
+
+function addWithdrawBatch(builder, unlockTokensMaxCycles) {
+    for (let i = 0; i <= unlockTokensMaxCycles; i++) {
+        builder.init();
+        addWithdraw(builder, i, false);
+
+        builder.init();
+        addWithdraw(builder, i, true);
+    }
 }
 
 module.exports = {
@@ -253,6 +274,7 @@ module.exports = {
     addWhiteListBatch,
     addCreteMultiplierNftBatch,
     addMulticallVoteBatch,
+    addWithdrawBatch,
 
     splitIntToBool,
 
@@ -262,4 +284,5 @@ module.exports = {
     addCancelVote,
     addDeposit,
     addMulticallVote,
+    addWithdraw,
 };
