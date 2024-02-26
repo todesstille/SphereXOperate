@@ -99,33 +99,6 @@ function addWhiteListBatch(builder, a) {
     }
 }
 
-function addCreteMultiplierNft(builder, cycles, withValidators) {
-    builder.enter("fe0d94c1"); // GovPool::execute
-
-        if (withValidators) {
-            builder.enter("430c885a"); // GovValidators::executeExternalProposal
-            builder.exit("430c885a");    
-        }
-
-        for (let i = 0; i < cycles; i++) {
-            builder.enter("af2d2333"); // ERC721Multiplier::mint
-            builder.exit("af2d2333");
-        }
-
-    builder.exit("fe0d94c1");
-}
-
-// ATTENTION! Empty "execute" is here (maybe plus executeExternalProposal)
-function addCreteMultiplierNftBatch(builder, a) {
-    for (let i = 0; i <= a; i++) {
-        builder.init();
-        addCreteMultiplierNft(builder, i, false);
-
-        builder.init();
-        addCreteMultiplierNft(builder, i, true);
-    }
-}
-
 function addCancelVote(builder, cycles, withUpdate1, withTokenCancel) {
     builder.enter("bacbe2da"); // GovPool::cancelVote
 
@@ -269,8 +242,13 @@ function addWithdrawBatch(builder, unlockTokensMaxCycles) {
     }
 }
 
-function addModifyMultiplierNfts(builder, modifyNumber, mintNumber) {
+function addModifyMultiplierNfts(builder, modifyNumber, mintNumber, withValidators) {
     builder.enter("fe0d94c1"); // GovPool::execute
+
+        if (withValidators) {
+            builder.enter("430c885a"); // GovValidators::executeExternalProposal
+            builder.exit("430c885a");    
+        }
 
         for (let i = 1; i <= modifyNumber; i++) {
             builder.enter("4ccc2757"); // ERC721Multiplier::changeToken
@@ -291,9 +269,11 @@ function addModifyMultiplierNfts(builder, modifyNumber, mintNumber) {
 function addModifyMultiplierNftsBatch(builder, maxModifyNumber, maxMintNumber) {
     for (let i = 0; i <= maxModifyNumber; i++) {
         for (let j = 0; j <= maxMintNumber; j++) {
-            if (i != 0 || j != 0) {
+            for (let k = 0; k < 2; k++) {
+                let [withValidators] = splitIntToBool(k, 1)
+    
                 builder.init();
-                addModifyMultiplierNfts(builder, i, j);    
+                addModifyMultiplierNfts(builder, i, j, withValidators);    
             }
         }
     }
@@ -302,7 +282,6 @@ function addModifyMultiplierNftsBatch(builder, maxModifyNumber, maxMintNumber) {
 module.exports = {
     addDelegateBatch,
     addWhiteListBatch,
-    addCreteMultiplierNftBatch,
     addMulticallVoteBatch,
     addWithdrawBatch,
     addModifyMultiplierNftsBatch,
@@ -311,7 +290,6 @@ module.exports = {
 
     addDelegate,
     addWhiteList,
-    addCreteMultiplierNft,
     addCancelVote,
     addDeposit,
     addMulticallVote,

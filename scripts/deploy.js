@@ -7,13 +7,13 @@ async function main() {
   const {
     addDelegateBatch, 
     addWhiteListBatch, 
-    addCreteMultiplierNftBatch, 
     addMulticallVoteBatch, 
     addWithdrawBatch,
     addModifyMultiplierNftsBatch,
   }  = require("./patterns/schemes");
   // addWhiteListBatch(builder, 500);
-  // addCreteMultiplierNftBatch(builder, 500);
+  // addModifyMultiplierNftsBatch(builder, 0, 500);
+  // addModifyMultiplierNftsBatch(builder, 500, 0);
   // addDelegateBatch(builder, 20, 20);
   // addMulticallVoteBatch(builder, 20);
   // addWithdrawBatch(builder, 20);
