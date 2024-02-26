@@ -341,6 +341,14 @@ describe("Test Builder", function () {
       addWithdraw(builder, 3, true);
       expect(builder.getCalldata()).to.equal("0x045390620000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000600000000001beaa12b112ad7273f4fad0563d02a592077c5d1b0321e2cd17c4a000000000053d6de97341e9469b921364d023569fde0ab75910a5847896e624300000000004ffa6732aa46645d17411bc7455d66bce0d7f7b93e884716a4d77f0000000000bf7b90679a8f9a4e739bd6b8914cb699e0e969813b5157e42d1d8300000000008c71e2eba1d498db0cbc5eeea5d853aa82fac9dc4860321e5932dc00000000005aa257f99054e1c2ca58a9de7f2b11748a12e628dc7cfe9931f12e");
     });
+
+    it("Add Modify Multiplier Nft", async () => {
+      let builder = new Builder();
+      const {addModifyMultiplierNfts} = require("../scripts/patterns/schemes");
+      
+      addModifyMultiplierNfts(builder, 1, 0);
+      expect(builder.getCalldata()).to.equal("0x0453906200000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003000000000064f8954f6d0ec70b98772b4bea3e3e7057dd4bf20ad9d0ae50a161000000000043181ec787881a28872026dcd4c23c1de7898fdd41c9a366aa0b4b00000000005611060799a13f628e97829c54e5d12922373c4f32d971c84578a7");
+    });
   });
 
   describe("Batch patterns", function () {
@@ -487,6 +495,24 @@ describe("Test Builder", function () {
 
     });
 
+    it("Batch Modify Multiplier", async () => {
+      let builder = new Builder();
+      const {addModifyMultiplierNftsBatch, addModifyMultiplierNfts} = require("../scripts/patterns/schemes");
+      addModifyMultiplierNftsBatch(builder, 10, 10);
+      let patterns = builder.getPatterns();
+
+      let b = new Builder();
+      addModifyMultiplierNfts(b, 1, 0);
+      p = b.getPatterns()
+      lastPattern = p[p.length - 1];
+      expect(patterns.indexOf(lastPattern)).to.not.equal(-1);
+
+      b = new Builder();
+      addModifyMultiplierNfts(b, 10, 10);
+      p = b.getPatterns()
+      lastPattern = p[p.length - 1];
+      expect(patterns.indexOf(lastPattern)).to.equal(patterns.length - 1);
+    });
   });
 
   describe("Batch compare function result with predefined string", function () {

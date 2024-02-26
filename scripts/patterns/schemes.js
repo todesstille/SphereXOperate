@@ -269,12 +269,43 @@ function addWithdrawBatch(builder, unlockTokensMaxCycles) {
     }
 }
 
+function addModifyMultiplierNfts(builder, modifyNumber, mintNumber) {
+    builder.enter("fe0d94c1"); // GovPool::execute
+
+        for (let i = 1; i <= modifyNumber; i++) {
+            builder.enter("4ccc2757"); // ERC721Multiplier::changeToken
+            builder.exit("4ccc2757");
+
+            builder.enter("162094c4"); // ERC721Multiplier::setTokenURI
+            builder.exit("162094c4");
+        }
+
+        for (let i = 1; i <= mintNumber; i++) {
+            builder.enter("af2d2333"); // ERC721Multiplier::mint
+            builder.exit("af2d2333");
+        }
+
+    builder.exit("fe0d94c1");
+}
+
+function addModifyMultiplierNftsBatch(builder, maxModifyNumber, maxMintNumber) {
+    for (let i = 0; i <= maxModifyNumber; i++) {
+        for (let j = 0; j <= maxMintNumber; j++) {
+            if (i != 0 || j != 0) {
+                builder.init();
+                addModifyMultiplierNfts(builder, i, j);    
+            }
+        }
+    }
+}
+
 module.exports = {
     addDelegateBatch,
     addWhiteListBatch,
     addCreteMultiplierNftBatch,
     addMulticallVoteBatch,
     addWithdrawBatch,
+    addModifyMultiplierNftsBatch,
 
     splitIntToBool,
 
@@ -285,4 +316,5 @@ module.exports = {
     addDeposit,
     addMulticallVote,
     addWithdraw,
+    addModifyMultiplierNfts,
 };
