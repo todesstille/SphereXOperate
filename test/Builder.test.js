@@ -349,6 +349,42 @@ describe("Test Builder", function () {
       addModifyMultiplierNfts(builder, 1, 0);
       expect(builder.getCalldata()).to.equal("0x0453906200000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003000000000064f8954f6d0ec70b98772b4bea3e3e7057dd4bf20ad9d0ae50a161000000000043181ec787881a28872026dcd4c23c1de7898fdd41c9a366aa0b4b00000000005611060799a13f628e97829c54e5d12922373c4f32d971c84578a7");
     });
+
+    it("Add Create Proposal and Vote", async () => {
+      let builder = new Builder();
+      const {addCreateProposalAndVote} = require("../scripts/patterns/schemes");
+      
+      addCreateProposalAndVote(builder, 1, true, true, false);
+      expect(builder.getCalldata()).to.equal("0x04539062000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000050000000000a6601d1ad90fabf8d0aee647eca5b70f5096af7bdbdedeca9ee3b2000000000099e5cfbf91d1725dcdb969ba947941b6c63fe75ac6e921f85e74450000000000b98cdf52d1a504d92053743bbc029280da2250a22b9d99781fc0f400000000005ebb21057d3086fe2a8705ec782e8a15af02e9ba6037e0495157550000000000999197fd3fe2aef2c2083eb852dfbdcb754a1f566fd6c44061e61b");
+    });
+
+    it("Add Execute Proposal Creation", async () => {
+      let builder = new Builder();
+      const {addExecuteProposalCreation} = require("../scripts/patterns/schemes");
+
+      addExecuteProposalCreation(builder, false, true, false, 0, true, true, false);
+      expect(builder.getCalldata()).to.equal("0x045390620000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000700000000007d524156339646681322cfac7875f999b655b3ed4aaae9fee00ead0000000000da109b2bf922a139bd47382dee6ca14c5ee6dfb6414b67f727d47f000000000033d7b5dc54b1421c4072dccb830a92f997b9193e5957960e02a95f00000000001e73c0fd0afaf218566269ffd01c707f2f8af36d88c79cbe68a14d000000000015a3342d48beffb1f9095c7ff861da4257e123b8662a964a7523640000000000c10bcfa7815e50d2e40c18abfd88f0ceaa9cdc86a47fa7344acd40000000000001c4d961070920c0f81823e5a8889e29dbcb41c528d3cccc03f4f2");
+
+      builder = new Builder();
+      addExecuteProposalCreation(builder, false, true, false, 1, true, true, false);
+      expect(builder.getCalldata()).to.equal("0x045390620000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000800000000007d524156339646681322cfac7875f999b655b3ed4aaae9fee00ead0000000000da109b2bf922a139bd47382dee6ca14c5ee6dfb6414b67f727d47f0000000000d44512395fbe32a4668004f4766acb04dc89f71dc659ff3fdf715f0000000000e1b329927b46faf472f34a3b0dc980e0432067c7958ae3170a4dd30000000000c12de53ed2ee3bf754636237334d8f040f8379dd4e3bb8486336ef0000000000512319f2792f6d72ff3abc10a0c42dc3db6795d0212ca11845fbf00000000000ac7b9e1c98c3bc6d02cb5ed94f05c380b497adde97c4cc66133e860000000000656f348803936247ac86b2bc95748d5aac438bebf86de478b7d657");
+
+      builder = new Builder();
+      addExecuteProposalCreation(builder, false, false, false, 1, true, true, false);
+      expect(builder.getCalldata()).to.equal("0x04539062000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000060000000000de439d6a887d60d25215feea6a1cb5c096840b386a9340319df49d00000000002f9a3f2f3f196a46432ff8c65ce0d82960ad4be76cb0e263e9477800000000009eb652b6e9bad01c18dc852532c500770b4387a83543fc776dc08b00000000001d9a08a1a09e53dd5ce336fa55913c949f7b74e90fb02fac4e511800000000005700953a0e1c572604aaf250e32e537dfc35c3dfc42d476723a2db000000000001e21c1e435c87da0a97a05cc49d65d7c504dc8b09fe6fa5d2fc4f");
+
+      builder = new Builder();
+      addExecuteProposalCreation(builder, true, false, false, 0, true, false, false);
+      expect(builder.getCalldata()).to.equal("0x04539062000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000050000000000153270cc7db1f30be2ad8d3ffc9578b26f04931643873dc437f7ef000000000048ecc325f56c86b0e1a24ffdd7a8b046df2215f7bf58c0fa3c8b390000000000cd8383d42a90f2d96543e45f4ffa6aa159ab9a5cc595c86e1effdc000000000029c84a80c80c1058ca5df95af908e6e66355543e973343e3462a3200000000008cab66ca962b9754a56b8f204b232e783ab686fe56b25fb070e505");
+
+      builder = new Builder();
+      addExecuteProposalCreation(builder, false, false, false, 0, true, false, false);
+      expect(builder.getCalldata()).to.equal("0x04539062000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000040000000000af8cd354dd6f48aff2d5383e1d36777eb3c6fa784b32ab7ae1b17600000000000cdf7bf0f23d1fd078a492aa989148d2b2c64a3e32b553effc0998000000000004acaff67d962d72079489f79ba99b75efb00cab49af01efd2274200000000006b73af775541991cf517587e10a9c19104936ca30ff3447194c2f9");
+
+      builder = new Builder();
+      addExecuteProposalCreation(builder, true, true, false, 0, true, true, false);
+      expect(builder.getCalldata()).to.equal("0x04539062000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000080000000000153270cc7db1f30be2ad8d3ffc9578b26f04931643873dc437f7ef0000000000851e46f07938d0b3772c68bb26adc96753533d1beed684f52834ca000000000099e988952a76f2ef2bdcb5613161d95be6dd434b503ccad26635bf00000000008d42dae64470d6c46ad2440d932af60cd18d5842141cfd8fb069900000000000499e22c975206dbded9143305949226e19c10aaa92507ac09c7ab2000000000082d1a406436a30631a5bf96300a88e79d259bdb7296696a50b4948000000000011116cba35f015c98952275f3da98c408ead50da8dc6207f40ec36000000000065ecedc2b5a58cd492c121722a39f76793b22318b427988a1eb872");
+    });
   });
 
   describe("Batch patterns", function () {
@@ -512,6 +548,45 @@ describe("Test Builder", function () {
       p = b.getPatterns()
       lastPattern = p[p.length - 1];
       expect(patterns.indexOf(lastPattern)).to.equal(patterns.length - 1);
+    });
+
+    it("Batch Create Proposal and Vote", async () => {
+      let builder = new Builder();
+      const {addCreateProposalAndVoteBatch, addCreateProposalAndVote} = require("../scripts/patterns/schemes");
+      addCreateProposalAndVoteBatch(builder, 5);
+      let patterns = builder.getPatterns();
+
+      let b = new Builder();
+      addCreateProposalAndVote(b, 0, false, false, false);
+      p = b.getPatterns()
+      lastPattern = p[p.length - 1];
+      expect(patterns.indexOf(lastPattern)).to.not.equal(-1);
+
+      b = new Builder();
+      addCreateProposalAndVote(b, 5, true, true, false);
+      p = b.getPatterns()
+      lastPattern = p[p.length - 1];
+      expect(patterns.indexOf(lastPattern)).to.equal(patterns.length - 1);
+    });
+
+    it("Batch Add Execute Proposal Creation", async () => {
+      let builder = new Builder();
+      const {addExecuteProposalCreation, addExecuteProposalCreationBatch} = require("../scripts/patterns/schemes");
+      addExecuteProposalCreationBatch(builder, 5);
+      let patterns = builder.getPatterns();
+
+      let b = new Builder();
+      addExecuteProposalCreation(b, false, false, false, 0, false, false, false);
+      p = b.getPatterns()
+      lastPattern = p[p.length - 1];
+      expect(patterns.indexOf(lastPattern)).to.not.equal(-1);
+
+      b = new Builder();
+      addExecuteProposalCreation(b, true, true, false, 5, true, true, false);
+      p = b.getPatterns()
+      lastPattern = p[p.length - 1];
+      expect(patterns.indexOf(lastPattern)).to.equal(patterns.length - 1);
+
     });
   });
 
