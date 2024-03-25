@@ -22,13 +22,12 @@ function addUnlockTokens(builder, unlockTokenCycles, withUpdate) {
     }
 }
 
-function addDelegate(builder, cycles1, cycles2, withDeposit, withUpdate1, withUpdate2) {
+function addDelegate(builder, cycles1, cycles2, withDepositTokens, withDepositNfts, withUpdate1, withUpdate2) {
     builder.enter("ac9650d8"); // GovPool::multicall
 
-        if (withDeposit) {
-            let withTokens = true;
-            let withNft = false;
-            addDeposit(builder, withTokens, withNft);
+        // both false works as no deposit
+        if (withDepositTokens || withDepositNfts) {
+            addDeposit(builder, withDepositTokens, withDepositNfts);
         }
 
         builder.enter("46d0b0b9"); // GovPool::delegate
@@ -50,11 +49,11 @@ function addDelegate(builder, cycles1, cycles2, withDeposit, withUpdate1, withUp
 function addDelegateBatch(builder, a, b) {
     for (let i = 0; i <= a; i++) {
         for (let j = 0; j <= b; j++) {
-            for (let k = 0; k < 8; k++) {
-                let [withDeposit, withUpdate1, withUpdate2] = splitIntToBool(k, 3)
+            for (let k = 0; k < 16; k++) {
+                let [withDepositedTokens, withDepositedNfts, withUpdate1, withUpdate2] = splitIntToBool(k, 4)
 
                 builder.init();
-                addDelegate(builder, i, j, withDeposit, withUpdate1, withUpdate2);
+                addDelegate(builder, i, j, withDepositedTokens, withDepositedNfts, withUpdate1, withUpdate2);
             }
         }    
     }
@@ -213,8 +212,12 @@ function addMulticallVoteBatch(builder, unlockTokenMaxNumber) {
         addCancelVote(builder, i, true, true);
     }
 
-    builder.init();
-    addDeposit(builder, true, false);
+    for (let i = 1; i < 4; i++) {
+        let [withTokensDeposit, withNftsDeposit] = splitIntToBool(i, 2)
+
+        builder.init();
+        addDeposit(builder, withTokensDeposit, withNftsDeposit);
+    }
 
     for (let i = 0; i <= unlockTokenMaxNumber; i++) {
         for (let j = 0; j < 4; j++) {
@@ -227,10 +230,13 @@ function addMulticallVoteBatch(builder, unlockTokenMaxNumber) {
 
     for (let i = 0; i <= unlockTokenMaxNumber; i++) {
         for (let j = 0; j < 4; j++) {
-            let [withUpdate, areTokensLocked] = splitIntToBool(j, 2)
+            for (let k = 1; k < 4; k++) {
+                let [withUpdate, areTokensLocked] = splitIntToBool(j, 2);
+                let [withTokensDeposit, withNftsDeposit] = splitIntToBool(k, 2)
 
-            builder.init();
-            addMulticallVote(builder, [], [true, false], [i, withUpdate, areTokensLocked, false]);
+                builder.init();
+                addMulticallVote(builder, [], [withTokensDeposit, withNftsDeposit], [i, withUpdate, areTokensLocked, false]);
+            }
         }
     }
 
@@ -245,10 +251,13 @@ function addMulticallVoteBatch(builder, unlockTokenMaxNumber) {
 
     for (let i = 0; i <= unlockTokenMaxNumber; i++) {
         for (let j = 0; j < 8; j++) {
-            let [withUpdate1, withUpdate2, areTokensLocked] = splitIntToBool(j, 3)
+            for (let k = 1; k < 4; k++) {
+                let [withTokensDeposit, withNftsDeposit] = splitIntToBool(k, 2)
+                let [withUpdate1, withUpdate2, areTokensLocked] = splitIntToBool(j, 3)
             
-            builder.init();
-            addMulticallVote(builder, [i, withUpdate1, true], [true, false], [0, withUpdate2, areTokensLocked, false])
+                builder.init();
+                addMulticallVote(builder, [i, withUpdate1, true], [withTokensDeposit, withNftsDeposit], [0, withUpdate2, areTokensLocked, false])
+            }
         }
     }
 }
@@ -342,19 +351,19 @@ function addExecuteProposalCreation(
 
 function addExecuteProposalCreationBatch(builder, unlockTokensMaxCycles) {
     for (let i = 0; i <= unlockTokensMaxCycles; i++) {
-        for (let j = 0; j < 16; j++) {
-            let [withValidators, withTokensDeposit, withUpdate1, withLockTokens] = splitIntToBool(j, 4)
+        for (let j = 0; j < 64; j++) {
+            let [withValidators, withTokensDeposit, withNftsDeposit, withUpdate1, withLockTokens, withLockNfts] = splitIntToBool(j, 6)
 
             builder.init();
             addExecuteProposalCreation(
                 builder, 
                 withValidators, 
                 withTokensDeposit,
-                false,
+                withNftsDeposit,
                 i,
                 withUpdate1, 
                 withLockTokens,
-                false 
+                withLockNfts
             )
         }
     }
