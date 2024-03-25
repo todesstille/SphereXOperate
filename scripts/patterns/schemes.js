@@ -151,11 +151,11 @@ function addCreateProposalAndVote(builder, unlockTokenCycles, withUpdate1, withL
 
 function addCreateProposalAndVoteBatch(builder, unlockTokenCyclesMax) {
     for (let i = 0; i <= unlockTokenCyclesMax; i++) {
-        for (let j = 0; j < 4; j++) {
-            let [withUpdate, withLockTokens] = splitIntToBool(j, 2);
+        for (let j = 0; j < 8; j++) {
+            let [withUpdate, withLockTokens, withLockNfts] = splitIntToBool(j, 3);
             
             builder.init();
-            addCreateProposalAndVote(builder, i, withUpdate, withLockTokens, false);
+            addCreateProposalAndVote(builder, i, withUpdate, withLockTokens, withLockNfts);
         }
     }
 }
@@ -332,7 +332,7 @@ function addExecuteProposalCreation(
         withLockNfts
     ) {
 
-    builder.enter("fe0d94c1");
+    builder.enter("fe0d94c1"); // GovPool::execute
 
         if (withValidators) {
             builder.enter("430c885a"); // GovValidators::executeExternalProposal

@@ -563,7 +563,7 @@ describe("Test Builder", function () {
       expect(patterns.indexOf(lastPattern)).to.not.equal(-1);
 
       b = new Builder();
-      addCreateProposalAndVote(b, 5, true, true, false);
+      addCreateProposalAndVote(b, 5, true, true, true);
       p = b.getPatterns()
       lastPattern = p[p.length - 1];
       expect(patterns.indexOf(lastPattern)).to.equal(patterns.length - 1);
