@@ -23,7 +23,6 @@ async function main() {
   // addModifyMultiplierNftsBatch(builder, 50, 50);
   // addCreateProposalAndVoteBatch(builder, 25);
   // addExecuteProposalCreationBatch(builder, 20);
-  // addWithdrawWithoutUnlockNft(builder);
 
   await builder.setPatterns();
   // console.log(builder.getPatterns().length)
