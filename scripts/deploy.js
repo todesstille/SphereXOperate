@@ -11,8 +11,7 @@ async function main() {
     addWithdrawBatch,
     addModifyMultiplierNftsBatch,
     addCreateProposalAndVoteBatch,
-    addExecuteProposalCreationBatch,
-    addWithdrawWithoutUnlockNft
+    addExecuteProposalCreationBatch
   }  = require("./patterns/schemes");
   // addWhiteListBatch(builder, 500);
   // addModifyMultiplierNftsBatch(builder, 0, 500);
