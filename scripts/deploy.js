@@ -18,12 +18,12 @@ async function main() {
   // addModifyMultiplierNftsBatch(builder, 0, 500);
   // addModifyMultiplierNftsBatch(builder, 500, 0);
   // addDelegateBatch(builder, 15, 15);
-  // addMulticallVoteBatch(builder, 20);
-  // addWithdrawBatch(builder, 20);
+  addMulticallVoteBatch(builder, 20);
+  // addWithdrawBatch(builder, 25);
   // addModifyMultiplierNftsBatch(builder, 50, 50);
   // addCreateProposalAndVoteBatch(builder, 25);
   // addExecuteProposalCreationBatch(builder, 20);
-  addWithdrawWithoutUnlockNft(builder);
+  // addWithdrawWithoutUnlockNft(builder);
 
   await builder.setPatterns();
   // console.log(builder.getPatterns().length)

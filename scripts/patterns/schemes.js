@@ -203,7 +203,7 @@ function addMulticallVote(
     builder.exit("ac9650d8");
 }
 
-function addMulticallVoteBatch(builder, unlockTokenMaxNumber) {
+function addMulticallVoteBatch(builder, unlockTokenMaxNumber) { // CHECK FIRST 2 LOOPS!!!!!
     for (let i = 0; i <= unlockTokenMaxNumber; i++) {
         builder.init();
         addCancelVote(builder, i, false, true);
@@ -220,67 +220,93 @@ function addMulticallVoteBatch(builder, unlockTokenMaxNumber) {
     }
 
     for (let i = 0; i <= unlockTokenMaxNumber; i++) {
-        for (let j = 0; j < 4; j++) {
-            let [withUpdate, areTokensLocked] = splitIntToBool(j, 2)
+        for (let j = 0; j < 8; j++) {
+            let [withUpdate, areTokensLocked, areNftsLocked] = splitIntToBool(j, 3)
 
             builder.init();
-            addMulticallVote(builder, [], [], [i, withUpdate, areTokensLocked, false]);
+            addMulticallVote(builder, [], [], [i, withUpdate, areTokensLocked, areNftsLocked]);
         }
     }
 
     for (let i = 0; i <= unlockTokenMaxNumber; i++) {
-        for (let j = 0; j < 4; j++) {
+        for (let j = 0; j < 8; j++) {
             for (let k = 1; k < 4; k++) {
-                let [withUpdate, areTokensLocked] = splitIntToBool(j, 2);
+                let [withUpdate, areTokensLocked, areNftsLocked] = splitIntToBool(j, 3);
                 let [withTokensDeposit, withNftsDeposit] = splitIntToBool(k, 2)
 
                 builder.init();
-                addMulticallVote(builder, [], [withTokensDeposit, withNftsDeposit], [i, withUpdate, areTokensLocked, false]);
+                addMulticallVote(builder, [], [withTokensDeposit, withNftsDeposit], [i, withUpdate, areTokensLocked, areNftsLocked]);
             }
         }
     }
 
     for (let i = 0; i <= unlockTokenMaxNumber; i++) {
-        for (let j = 0; j < 8; j++) {
-            let [withUpdate1, withUpdate2, areTokensLocked] = splitIntToBool(j, 3)
+        for (let j = 0; j < 16; j++) {
+            let [withUpdate1, withUpdate2, areTokensLocked, areNftsLocked] = splitIntToBool(j, 4)
             
             builder.init();
-            addMulticallVote(builder, [i, withUpdate1, true], [], [0, withUpdate2, areTokensLocked, false])
+            addMulticallVote(builder, [i, withUpdate1, true], [], [0, withUpdate2, areTokensLocked, areNftsLocked])
         }
     }
 
     for (let i = 0; i <= unlockTokenMaxNumber; i++) {
-        for (let j = 0; j < 8; j++) {
+        for (let j = 0; j < 16; j++) {
             for (let k = 1; k < 4; k++) {
                 let [withTokensDeposit, withNftsDeposit] = splitIntToBool(k, 2)
-                let [withUpdate1, withUpdate2, areTokensLocked] = splitIntToBool(j, 3)
+                let [withUpdate1, withUpdate2, areTokensLocked, areNftsLocked] = splitIntToBool(j, 4)
             
                 builder.init();
-                addMulticallVote(builder, [i, withUpdate1, true], [withTokensDeposit, withNftsDeposit], [0, withUpdate2, areTokensLocked, false])
+                addMulticallVote(builder, [i, withUpdate1, true], [withTokensDeposit, withNftsDeposit], [0, withUpdate2, areTokensLocked, areNftsLocked])
             }
         }
     }
 }
 
-function addWithdraw(builder, unlockTokensCycles, withUpdate) {
+function addWithdraw(builder, unlockTokensCycles, withUpdate, withWithdrawTokens, withWithdrawNfts) {
     
     builder.enter("fb8c5ef0"); // GovPool::withdraw
 
         addUnlockTokens(builder, unlockTokensCycles, withUpdate)
 
-        builder.enter("5e35359e") // GovUserKeeper::withdrawTokens
-        builder.exit("5e35359e")
+        assert(withWithdrawTokens || withWithdrawNfts)
+
+        if (withWithdrawTokens) {
+            builder.enter("5e35359e") // GovUserKeeper::withdrawTokens
+            builder.exit("5e35359e")    
+        }
+
+        if (withWithdrawNfts) {
+            builder.enter("1f96f376") // GovUserKeeper::withdrawNfts
+            builder.exit("1f96f376")    
+        }
 
     builder.exit("fb8c5ef0");
 }
 
+function addExecuteWithdraw(builder, unlockTokensCycles, withUpdate, withWithdrawTokens, withWithdrawNfts) {
+    builder.enter("fe0d94c1"); // GovPool::execute
+
+        addWithdraw(builder, unlockTokensCycles, withUpdate, withWithdrawTokens, withWithdrawNfts);
+
+    builder.exit("fe0d94c1");
+}
+
 function addWithdrawBatch(builder, unlockTokensMaxCycles) {
     for (let i = 0; i <= unlockTokensMaxCycles; i++) {
-        builder.init();
-        addWithdraw(builder, i, false);
-
-        builder.init();
-        addWithdraw(builder, i, true);
+        for (let j = 1; j < 4; j++) {
+            let [withWithdrawTokens, withWithdrawNfts] = splitIntToBool(j, 2)
+            builder.init();
+            addWithdraw(builder, i, false, withWithdrawTokens, withWithdrawNfts);
+    
+            builder.init();
+            addWithdraw(builder, i, true, withWithdrawTokens, withWithdrawNfts);
+    
+            builder.init();
+            addExecuteWithdraw(builder, i, false, withWithdrawTokens, withWithdrawNfts);
+    
+            builder.init();
+            addExecuteWithdraw(builder, i, true, withWithdrawTokens, withWithdrawNfts);
+        }
     }
 }
 
@@ -399,6 +425,7 @@ module.exports = {
     addDeposit,
     addMulticallVote,
     addWithdraw,
+    addExecuteWithdraw,
     addModifyMultiplierNfts,
     addCreateProposalAndVote,
     addExecuteProposalCreation,
