@@ -11,7 +11,8 @@ async function main() {
     addWithdrawBatch,
     addModifyMultiplierNftsBatch,
     addCreateProposalAndVoteBatch,
-    addExecuteProposalCreationBatch
+    addExecuteProposalCreationBatch,
+    addWithdrawWithoutUnlockNft
   }  = require("./patterns/schemes");
   // addWhiteListBatch(builder, 500);
   // addModifyMultiplierNftsBatch(builder, 0, 500);
@@ -21,7 +22,8 @@ async function main() {
   // addWithdrawBatch(builder, 20);
   // addModifyMultiplierNftsBatch(builder, 50, 50);
   // addCreateProposalAndVoteBatch(builder, 25);
-  addExecuteProposalCreationBatch(builder, 20);
+  // addExecuteProposalCreationBatch(builder, 20);
+  addWithdrawWithoutUnlockNft(builder);
 
   await builder.setPatterns();
   // console.log(builder.getPatterns().length)

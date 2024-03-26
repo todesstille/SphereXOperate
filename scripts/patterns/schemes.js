@@ -370,6 +370,17 @@ function addExecuteProposalCreationBatch(builder, unlockTokensMaxCycles) {
 
 }
 
+function addWithdrawWithoutUnlockNft(builder) {
+    builder.init();
+    builder.enter("fb8c5ef0"); // GovPool::withdraw
+        builder.enter("5f884296"); // GovUserKeeper::updateMaxTokenLockedAmount
+        builder.exit("5f884296");
+
+        builder.enter("1f96f376"); // GovUserKeeper::withdrawNfts
+        builder.exit("1f96f376");
+    builder.exit("fb8c5ef0");
+}
+
 module.exports = {
     addDelegateBatch,
     addWhiteListBatch,
@@ -378,6 +389,7 @@ module.exports = {
     addModifyMultiplierNftsBatch,
     addCreateProposalAndVoteBatch,
     addExecuteProposalCreationBatch,
+    addWithdrawWithoutUnlockNft,
 
     splitIntToBool,
 
