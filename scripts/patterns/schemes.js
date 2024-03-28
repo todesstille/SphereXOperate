@@ -107,23 +107,27 @@ function addCancelVote(builder, cycles, withUpdate1, withTokenCancel) {
     builder.exit("bacbe2da");
 }
 
+function addVoteInternal(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLockNfts) {
+    addUnlockTokens(builder, unlockTokenCycles, withUpdate1);
+
+    builder.enter("30132f5e"); // GovUserKeeper::updateNftPowers
+    builder.exit("30132f5e");    
+
+    if (withLockTokens) {
+        builder.enter("154b3db0"); // GovUserKeeper::lockTokens
+        builder.exit("154b3db0");
+    }
+
+    if (withLockNfts) {
+        builder.enter("3b389164"); // GovUserKeeper::lockNfts
+        builder.exit("3b389164");
+    }
+}
+
 function addVote(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLockNfts) {
     builder.enter("544df02c"); // GovPool::vote
 
-        addUnlockTokens(builder, unlockTokenCycles, withUpdate1);
-
-        builder.enter("30132f5e"); // GovUserKeeper::updateNftPowers
-        builder.exit("30132f5e");    
-
-        if (withLockTokens) {
-            builder.enter("154b3db0"); // GovUserKeeper::lockTokens
-            builder.exit("154b3db0");
-        }
-
-        if (withLockNfts) {
-            builder.enter("3b389164"); // GovUserKeeper::lockNfts
-            builder.exit("3b389164");
-        }
+        addVoteInternal(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLockNfts)
 
     builder.exit("544df02c");
 }
@@ -131,20 +135,7 @@ function addVote(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLo
 function addCreateProposalAndVote(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLockNfts) {
     builder.enter("ee0e5215"); // GovPool::createProposalAndVote()
 
-        addUnlockTokens(builder, unlockTokenCycles, withUpdate1);
-
-        builder.enter("30132f5e"); // GovUserKeeper::updateNftPowers
-        builder.exit("30132f5e");    
-
-        if (withLockTokens) {
-            builder.enter("154b3db0"); // GovUserKeeper::lockTokens
-            builder.exit("154b3db0");
-        }
-
-        if (withLockNfts) {
-            builder.enter("3b389164"); // GovUserKeeper::lockNfts
-            builder.exit("3b389164");
-        }
+        addVoteInternal(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLockNfts)
 
     builder.exit("ee0e5215");
 }
@@ -439,6 +430,7 @@ module.exports = {
     addCreateProposalAndVoteBatch,
     addExecuteProposalCreationBatch,
     addExecuteCancelVoteBatch,
+    addExecuteVoteBatch,
 
     splitIntToBool,
 
