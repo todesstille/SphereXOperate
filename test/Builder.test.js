@@ -13,7 +13,7 @@ describe("Test Builder", function () {
 
   describe("Test general functionality", function () {
     it("Split number to bool", async () => {
-      const {splitIntToBool} = require("../scripts/patterns/schemes");
+      const {splitIntToBool, addCancelVote} = require("../scripts/patterns/schemes");
       expect(splitIntToBool(0, 3)).to.deep.equal([false, false, false]);
        expect(splitIntToBool(1, 3)).to.deep.equal([true, false, false]);
       expect(splitIntToBool(2, 3)).to.deep.equal([false, true, false]);
@@ -394,6 +394,15 @@ describe("Test Builder", function () {
       addExecuteProposalCreation(builder, true, true, false, 0, true, true, false);
       expect(builder.getCalldata()).to.equal("0x04539062000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000080000000000153270cc7db1f30be2ad8d3ffc9578b26f04931643873dc437f7ef0000000000851e46f07938d0b3772c68bb26adc96753533d1beed684f52834ca000000000099e988952a76f2ef2bdcb5613161d95be6dd434b503ccad26635bf00000000008d42dae64470d6c46ad2440d932af60cd18d5842141cfd8fb069900000000000499e22c975206dbded9143305949226e19c10aaa92507ac09c7ab2000000000082d1a406436a30631a5bf96300a88e79d259bdb7296696a50b4948000000000011116cba35f015c98952275f3da98c408ead50da8dc6207f40ec36000000000065ecedc2b5a58cd492c121722a39f76793b22318b427988a1eb872");
     });
+
+    it("Add Execute Cancel Vote", async () => {
+      let builder = new Builder();
+      const {addExecuteCancelVote} = require("../scripts/patterns/schemes");
+      
+      addExecuteCancelVote(builder, 0, false, true);
+      expect(builder.getCalldata()).to.equal("0x04539062000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000040000000000855eb5c4d5dbc9ff47e998ca617212c5e326fd785d0eaed6cd323d00000000006c9ddf4f1c59b9dd52df8fc432e3bdad7f509e0bc292e69ee7ee0b0000000000946489a103092c5cc5837d6a2d528bbd6b009411a4b5b4bf11f9a10000000000fb869b963d157ffb4dc3ceb0007670aee40ea3cb31073e1a93363f");
+    });
+
   });
 
   describe("Batch patterns", function () {

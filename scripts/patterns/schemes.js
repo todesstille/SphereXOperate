@@ -396,6 +396,23 @@ function addExecuteProposalCreationBatch(builder, unlockTokensMaxCycles) {
 
 }
 
+function addExecuteCancelVote(builder, cycles, withUpdate1, withTokenCancel) {
+    builder.enter("fe0d94c1"); // GovPool::execute
+        addCancelVote(builder, cycles, withUpdate1, withTokenCancel);
+    builder.exit("fe0d94c1");
+}
+
+function addExecuteCancelVoteBatch(builder, unlockTokensMaxCycles) {
+    for (let i = 0; i <= unlockTokensMaxCycles; i++) {
+        for (let j = 0; j < 4; j++) {
+            let [withUpdate1, withTokenCancel] = splitIntToBool(j, 2)
+
+            builder.init();
+            addExecuteCancelVote(builder, i, withUpdate1, withTokenCancel);
+        }
+    }
+}
+
 module.exports = {
     addDelegateBatch,
     addWhiteListBatch,
@@ -404,6 +421,7 @@ module.exports = {
     addModifyMultiplierNftsBatch,
     addCreateProposalAndVoteBatch,
     addExecuteProposalCreationBatch,
+    addExecuteCancelVoteBatch,
 
     splitIntToBool,
 
@@ -417,4 +435,5 @@ module.exports = {
     addModifyMultiplierNfts,
     addCreateProposalAndVote,
     addExecuteProposalCreation,
+    addExecuteCancelVote,
 };
