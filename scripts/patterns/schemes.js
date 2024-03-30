@@ -395,28 +395,47 @@ function addExecuteCancelVote(builder, cycles, withUpdate1, withTokenCancel) {
 
 function addExecuteCancelVoteBatch(builder, unlockTokensMaxCycles) {
     for (let i = 0; i <= unlockTokensMaxCycles; i++) {
-        for (let j = 0; j < 4; j++) {
-            let [withUpdate1, withTokenCancel] = splitIntToBool(j, 2)
+        for (let j = 0; j < 16; j++) {
+            let [withUpdate1, withTokenCancel, withWithdrawTokens, withWithdrawNfts] = splitIntToBool(j, 4)
 
             builder.init();
             addExecuteCancelVote(builder, i, withUpdate1, withTokenCancel);
+
+            if (withWithdrawTokens || withWithdrawNfts) {
+                addWithdraw(builder, 0, false, withWithdrawTokens, withWithdrawNfts);
+            }
         }
     }
 }
 
-function addExecuteVote(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLockNfts) {
+function addExecuteVote(
+        builder, 
+        unlockTokenCycles, 
+        withTokensDeposit, 
+        withNftsDeposit, 
+        withUpdate1, 
+        withLockTokens, 
+        withLockNfts
+    ) {
     builder.enter("fe0d94c1"); // GovPool::execute
+
+        // both false is a marker to not deposit at all
+        if (withTokensDeposit || withNftsDeposit) {
+            addDeposit(builder, withTokensDeposit, withNftsDeposit);
+        }
+
         addVote(builder, unlockTokenCycles, withUpdate1, withLockTokens, withLockNfts);
+
     builder.exit("fe0d94c1");
 }
 
 function addExecuteVoteBatch(builder, unlockTokensMaxCycles) {
     for (let i = 0; i <= unlockTokensMaxCycles; i++) {
-        for (let j = 0; j < 8; j++) {
-            let [withUpdate1, withLockTokens, withLockNfts] = splitIntToBool(j, 3)
+        for (let j = 0; j < 32; j++) {
+            let [withTokensDeposit, withNftsDeposit, withUpdate1, withLockTokens, withLockNfts] = splitIntToBool(j, 5)
 
-            builder.init();
-            addExecuteVote(builder, i, withUpdate1, withLockTokens, withLockNfts);
+            builder.init();    
+            addExecuteVote(builder, i, withTokensDeposit, withNftsDeposit, withUpdate1, withLockTokens, withLockNfts);
         }
     }
 }

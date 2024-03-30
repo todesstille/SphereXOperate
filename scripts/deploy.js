@@ -12,7 +12,8 @@ async function main() {
     addModifyMultiplierNftsBatch,
     addCreateProposalAndVoteBatch,
     addExecuteProposalCreationBatch,
-    addExecuteCancelVoteBatch
+    addExecuteCancelVoteBatch,
+    addExecuteVoteBatch
   }  = require("./patterns/schemes");
   // addWhiteListBatch(builder, 500);
   // addModifyMultiplierNftsBatch(builder, 0, 500);
@@ -24,6 +25,7 @@ async function main() {
   // addCreateProposalAndVoteBatch(builder, 25);
   // addExecuteProposalCreationBatch(builder, 20);
   addExecuteCancelVoteBatch(builder, 5);
+  // addExecuteVoteBatch(builder, 5);
 
   await builder.setPatterns();
   // console.log(builder.getPatterns().length)
