@@ -24,8 +24,8 @@ async function main() {
   // addModifyMultiplierNftsBatch(builder, 50, 50);
   // addCreateProposalAndVoteBatch(builder, 25);
   // addExecuteProposalCreationBatch(builder, 20);
-  addExecuteCancelVoteBatch(builder, 5);
-  // addExecuteVoteBatch(builder, 5);
+  addExecuteCancelVoteBatch(builder, 50);
+  // addExecuteVoteBatch(builder, 20);
 
   await builder.setPatterns();
   // console.log(builder.getPatterns().length)
