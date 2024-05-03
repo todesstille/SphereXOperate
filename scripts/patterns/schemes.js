@@ -477,6 +477,12 @@ function addBasicCorePatternsBatch(builder) {
     addBasicCorePatterns(builder);
 }
 
+function addNewBuyPatternBatch(builder) {
+    builder.init();
+    builder.enter("fe49cff8"); // TokenSaleProposal::buy
+    builder.exit("fe49cff8");
+}
+
 module.exports = {
     addDelegateBatch,
     addWhiteListBatch,
@@ -505,4 +511,5 @@ module.exports = {
 
     addInjectGPDependenciesBatch,
     addBasicCorePatternsBatch,
+    addNewBuyPatternBatch,
 };

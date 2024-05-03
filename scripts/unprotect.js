@@ -15,7 +15,30 @@ async function main() {
     });
 
     let receipt = await tx.wait();
-    console.log("txHash:", receipt.transactionHash);
+    console.log("Unprotect unlockNft. txHash:", receipt.transactionHash);
+
+    result = coder.encode(["string", "bytes4[]"], ["TOKEN_SALE_PROPOSAL", ["0x2afaca20"]]);
+    data = "0x29809f7d" + result.slice(2);
+    tx = await admin.sendTransaction({
+        value: 0,
+        to: poolRegistryAddress,
+        data: data
+    });
+
+    receipt = await tx.wait();
+    console.log("Unprotect old buy. txHash:", receipt.transactionHash);
+    
+    result = coder.encode(["string", "bytes4[]"], ["TOKEN_SALE_PROPOSAL", ["0xfe49cff8"]]);
+    data = "0xadab6520" + result.slice(2);
+    tx = await admin.sendTransaction({
+        value: 0,
+        to: poolRegistryAddress,
+        data: data
+    });
+
+    receipt = await tx.wait();
+    console.log("Protect new buy. txHash:", receipt.transactionHash);
+
 }
 
 main().catch((error) => {

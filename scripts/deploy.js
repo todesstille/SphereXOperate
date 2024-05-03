@@ -17,6 +17,7 @@ async function main() {
     
     addInjectGPDependenciesBatch,
     addBasicCorePatternsBatch,
+    addNewBuyPatternBatch,
 
   }  = require("./patterns/schemes");
   // addWhiteListBatch(builder, 500);
@@ -32,6 +33,7 @@ async function main() {
   // addExecuteVoteBatch(builder, 20);
 
   addInjectGPDependenciesBatch(builder, 100);
+  addNewBuyPatternBatch(builder);
   await builder.setPatterns();
   // console.log(builder.getPatterns().length)
 
