@@ -434,10 +434,47 @@ function addExecuteVoteBatch(builder, unlockTokensMaxCycles) {
         for (let j = 0; j < 32; j++) {
             let [withTokensDeposit, withNftsDeposit, withUpdate1, withLockTokens, withLockNfts] = splitIntToBool(j, 5)
 
-            builder.init();    
+            builder.init();
             addExecuteVote(builder, i, withTokensDeposit, withNftsDeposit, withUpdate1, withLockTokens, withLockNfts);
         }
     }
+}
+
+function addInjectGPDependencies(builder, poolsNumber) {
+    for (let i = 1; i <= poolsNumber; i++) {
+        builder.enter("69130451"); // GovPool::setDependencies
+        builder.exit("69130451");
+    }
+}
+
+function addInjectGPDependenciesBatch(builder, maxPoolsNumber) {
+    for (let i = 1; i <= maxPoolsNumber; i++) {
+        builder.init();
+        addInjectGPDependencies(builder, i);
+    }
+}
+
+function addInjectGPDependenciesWithExecute(builder, poolsNumber) {
+        builder.enter("fe0d94c1"); // GovPool::execute
+            addInjectGPDependencies(builder, poolsNumber);
+        builder.exit("fe0d94c1");
+}
+
+function addInjectGPDependenciesWithExecuteBatch(builder, maxPoolsNumber) {
+    for (let i = 1; i <= maxPoolsNumber; i++) {
+        builder.init();
+        addInjectGPDependenciesWithExecute(builder, i);
+    }
+}
+
+function addBasicCorePatterns(builder) {
+    builder.enter("24d6780f"); // PoolRegistry::injectDependenciesToExistingPools
+    builder.exit("24d6780f");
+}
+
+function addBasicCorePatternsBatch(builder) {
+    builder.init();
+    addBasicCorePatterns(builder);
 }
 
 module.exports = {
@@ -465,4 +502,7 @@ module.exports = {
     addExecuteProposalCreation,
     addExecuteCancelVote,
     addExecuteVote,
+
+    addInjectGPDependenciesBatch,
+    addBasicCorePatternsBatch,
 };

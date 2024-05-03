@@ -4,10 +4,14 @@ const assert = require('assert');
 const SLOTS_MAX = 500;
 
 class Builder {
-    constructor() {
+    constructor(isPoolEngine = true) {
         this.patternStart = "0x000000000000000000000000000000000000000000000000000001";
         this.currentPattern = "0x000000000000000000000000000000000000000000000000000001";
-        this.engineAddress = process.env.POOL_ENGINE;
+        if (isPoolEngine) {
+            this.engineAddress = process.env.POOL_ENGINE;    
+        } else {
+            this.engineAddress = process.env.CORE_ENGINE;
+        }
         this.patterns = [];
     }
 
