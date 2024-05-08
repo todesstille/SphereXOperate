@@ -26,11 +26,11 @@ async function main() {
   // addDelegateBatch(builder, 15, 15);
   // addMulticallVoteBatch(builder, 20);
   // addWithdrawBatch(builder, 25);
-  // addModifyMultiplierNftsBatch(builder, 50, 50);
-  // addCreateProposalAndVoteBatch(builder, 25);
-  // addExecuteProposalCreationBatch(builder, 20);
-  // addExecuteCancelVoteBatch(builder, 50);
-  // addExecuteVoteBatch(builder, 20);
+  addModifyMultiplierNftsBatch(builder, 20, 20);
+  addCreateProposalAndVoteBatch(builder, 20);
+  addExecuteProposalCreationBatch(builder, 20);
+  addExecuteCancelVoteBatch(builder, 20);
+  addExecuteVoteBatch(builder, 20);
 
   addInjectGPDependenciesBatch(builder, 100);
   addNewBuyPatternBatch(builder);
