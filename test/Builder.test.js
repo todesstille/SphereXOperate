@@ -673,6 +673,43 @@ describe("Test Builder", function () {
       lastPattern = p[p.length - 1];
       expect(patterns.indexOf(lastPattern)).to.not.equal(-1);
     });
+
+    it.only("Batch set initializators", async () => {
+      let builder = new Builder();
+      const {addInitPatternsBatch} = require("../scripts/patterns/schemes");
+      addInitPatternsBatch(builder);
+      let patterns = builder.getPatterns();
+
+      let containedPattern = "0x6b8312772b6e594304afc3d99036a8bd89277cbf8217899f1eeb07"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x16233a68365e6acd45ac9f016460683d56605a83740aa094caffa5"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xb1577c506f85a1d92391589e6a1a36d08473b617c362dccdbd0e99"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x67e9ecdbbe2b2415b72c31be9e9f4450a9686e320ac498c28ed0df"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x280c20d63266f46325e0d5123c23a693c417dd1fac2d0cf44122f4"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x2089e90c126bec94148bee75c94b913e23b80ac9c53cef754f4156"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x019847308b2fbddd8325df0a52a4d30be3a2eacb9ed23bca301e14"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x7f9c23eca6b7f5e7d800b43c028eef4b65e937e28ba6f9a529971a"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xb1bd1c059706d15ec700030ac0f25fae0942c16492081c66fd52ed"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x0e9abcae1ce4ab9171d5172185ca94f9b4584b21f9b58c68b48270"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+    });
   });
 
   describe("Batch compare function result with predefined string", function () {

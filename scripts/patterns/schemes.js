@@ -467,6 +467,56 @@ function addInjectGPDependenciesWithExecuteBatch(builder, maxPoolsNumber) {
     }
 }
 
+function addNewBuyPatternBatch(builder) {
+    builder.init();
+    builder.enter("fe49cff8"); // TokenSaleProposal::buy
+    builder.exit("fe49cff8");
+}
+
+function addInitPatternsBatch(builder) {
+    builder.init();
+    builder.enter("ac2901d6"); // GovValidators::__GovValidators_init
+    builder.exit("ac2901d6");
+
+    builder.init();
+    builder.enter("5b75f393"); // GovUserKeeper::__GovUserKeeper_init
+    builder.exit("5b75f393");
+
+    builder.init();
+    builder.enter("37913eed"); // GovSettings::__GovSettings_init
+    builder.exit("37913eed");
+
+    builder.init();
+    builder.enter("af6722dd"); // GovPool::__GovPool_init
+    builder.exit("af6722dd");
+
+    builder.init();
+    builder.enter("3cca1f2c"); // ERC721Expert::__ERC721Expert_init
+    builder.exit("3cca1f2c");
+
+    builder.init();
+    builder.enter("3073d589"); // ERC721Multiplier::__ERC721Multiplier_init
+    builder.exit("3073d589");
+
+    builder.init();
+    builder.enter("4064b0fa"); // PolynomialPower::__PolynomialPower_init
+    builder.exit("4064b0fa");
+
+    builder.init();
+    builder.enter("892aea1f"); // LinearPower::__LinearPower_init
+    builder.exit("892aea1f");
+
+    builder.init();
+    builder.enter("90b7be52"); // DistributionProposal::__DistributionProposal_init
+    builder.exit("90b7be52");
+
+    builder.init();
+    builder.enter("13fb0521"); // TokenSaleProposal::__TokenSaleProposal_init
+    builder.exit("13fb0521");
+}
+
+// =================== CORE ===========================
+
 function addBasicCorePatterns(builder) {
     builder.enter("24d6780f"); // PoolRegistry::injectDependenciesToExistingPools
     builder.exit("24d6780f");
@@ -475,12 +525,6 @@ function addBasicCorePatterns(builder) {
 function addBasicCorePatternsBatch(builder) {
     builder.init();
     addBasicCorePatterns(builder);
-}
-
-function addNewBuyPatternBatch(builder) {
-    builder.init();
-    builder.enter("fe49cff8"); // TokenSaleProposal::buy
-    builder.exit("fe49cff8");
 }
 
 module.exports = {
@@ -508,6 +552,7 @@ module.exports = {
     addExecuteProposalCreation,
     addExecuteCancelVote,
     addExecuteVote,
+    addInitPatternsBatch,
 
     addInjectGPDependenciesBatch,
     addBasicCorePatternsBatch,
