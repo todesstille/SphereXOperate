@@ -674,7 +674,7 @@ describe("Test Builder", function () {
       expect(patterns.indexOf(lastPattern)).to.not.equal(-1);
     });
 
-    it.only("Batch set initializators", async () => {
+    it("Batch set initializators", async () => {
       let builder = new Builder();
       const {addInitPatternsBatch} = require("../scripts/patterns/schemes");
       addInitPatternsBatch(builder);
@@ -709,6 +709,111 @@ describe("Test Builder", function () {
 
       containedPattern = "0x0e9abcae1ce4ab9171d5172185ca94f9b4584b21f9b58c68b48270"
       expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+    });
+
+    it("Batch set oneliners", async () => {
+      let builder = new Builder();
+      const {addOneLinersBatch} = require("../scripts/patterns/schemes");
+      addOneLinersBatch(builder);
+      let patterns = builder.getPatterns();
+
+      let containedPattern = "0x4cc0629c38729839e551735afa36aad1c6a30937af00d450588623"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x9cc5e77d970f225c73181d2fff00e3a1887bedd9c1045e5613ad32"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xe4089bee34459b667c1ed00d2c8e027db6f19e4e0da1be39df8f97"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xe8b737fbb81d84ba2e77e6ae19836b5f1c3bc5b0deecf3d215673e"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x61a20cb99cd1330347129c2ef962149c97c4eca2274c258f2de097"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xb0a68bea049da2fbf4f66dd1531c6efd1b3b404515fd17b599d744"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xf0f49d9428d568314bf517a266e40d2dfca4a75d94b35ae933b409"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x9c53b72d21048807ddf9986584790552364be99aa44353b8b1a99e"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xd9625c6f70bbf512f0db2d579ccfaa5f0425740698c755f82428e2"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x0041127f3c02608f6c8b06890f17274d94cd37f1ad61479a095fac"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xf51261ba3bf21289c707deab0ed4fd1fc8b3907b07d810db846af7"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x9f6279ad514e43f50eec45d6699b057357faafe3f360a5cba50bce"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xccfc95e40effc9711a7791ca5c33133835e13baf33d3e6213b3478"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x61ba2b8fd034e981a9736eb587de8998b2bf9cb3fb987c62d6a1cb"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+    });
+
+    it("Batch set short executes", async () => {
+      let builder = new Builder();
+      const {addShortExecutesBatch} = require("../scripts/patterns/schemes");
+      addShortExecutesBatch(builder);
+      let patterns = builder.getPatterns();
+
+      let containedPattern = "0x063ec4ef7d76300b1b94f6b94a41aa7746f168c6824d621816980e"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xb209bebeb955721a81005761df153dcfe1163ff2f8dae15b25356c"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x1b9da5346e96aa5664650ae433e7cc0bf3acfaa3a15749fef2dbfe"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xc0f5477a0d0627f455da7868ec4ddb6a0b9f016b73856bff3065f3"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x469d5fac15c04dc9a5ccbda24d11caf28b96b316da9ad2157676ee"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x5a8cc17b485ca6488fcf30f474319e98c6939cf22a15f3dadf8856"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x7775fe8a4201199613a14d745d069c834a2f588b397909bbc2a51e"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x00010ccf58b6126b2881d1f2adf0b75a7590eaad6b6e5f0a9930b4"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x0a5b01a0987c29a1af193686619deb14e1b053a9a5c1924a7861ce"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x31efc9fc07976d2cef6ec573e62a5394f9714cd729b26a5e63b649"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x20bded31adb9d92c4dd0abdebf3987ecac3642b5d8289b4c11ed9e"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x572895432429905e859da058c7ed8b439d3948d217d84651432fe8"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xd06de51e04d748d45721664848570cb300b9a7f55e3d904b9f9f75"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xd83608b6e6983cc1ea992392c835ba05920ea7fc2a39271770aeac"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0x96b9fe3fc9b2438771548b532efa467e3b81a3cb86878ad8a350e4"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
+      containedPattern = "0xc1293d091f9b4879ee3076b11aa292b781bd61ece023b30abe34c2"
+      expect(patterns.indexOf(containedPattern)).to.not.equal(-1);
+
     });
   });
 

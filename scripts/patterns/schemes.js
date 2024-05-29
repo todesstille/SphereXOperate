@@ -467,12 +467,6 @@ function addInjectGPDependenciesWithExecuteBatch(builder, maxPoolsNumber) {
     }
 }
 
-function addNewBuyPatternBatch(builder) {
-    builder.init();
-    builder.enter("fe49cff8"); // TokenSaleProposal::buy
-    builder.exit("fe49cff8");
-}
-
 function addInitPatternsBatch(builder) {
     builder.init();
     builder.enter("ac2901d6"); // GovValidators::__GovValidators_init
@@ -515,6 +509,178 @@ function addInitPatternsBatch(builder) {
     builder.exit("13fb0521");
 }
 
+function addOneLinersBatch(builder) {
+    builder.init();
+    builder.enter("f2fde38b"); // *::::transferOwnership
+    builder.exit("f2fde38b");
+    
+    builder.init();
+    builder.enter("69130451"); // *::setDependencies
+    builder.exit("69130451");
+    
+    builder.init();
+    builder.enter("8cb941cc"); // *::setInjector
+    builder.exit("8cb941cc");
+    
+    builder.init();
+    builder.enter("da1c6cfa");  // GovPool::createProposal
+    builder.exit("da1c6cfa");
+    
+    builder.init();
+    builder.enter("45718278");  // DistributionProposal::claim
+    builder.exit("45718278");
+    
+    builder.init();
+    builder.enter("6ba4c138"); // TokenSaleProposal::claim
+    builder.exit("6ba4c138");
+    
+    builder.init();
+    builder.enter("0520537f"); // GovPool::claimRewards
+    builder.exit("0520537f");
+    
+    builder.init();
+    builder.enter("fe49cff8"); // TokenSaleProposal::buy
+    builder.exit("fe49cff8");
+    
+    builder.init();
+    builder.enter("dd467064"); // ERC721Multiplier::lock
+    builder.exit("dd467064");
+    
+    builder.init();
+    builder.enter("a69df4b5"); // ERC721Multiplier::unlock
+    builder.exit("a69df4b5");
+    
+    builder.init();
+    builder.enter("ba877b80"); // GovValidators::voteExternalProposal
+    builder.exit("ba877b80");
+    
+    builder.init();
+    builder.enter("5a34c7e1"); // GovValidators::voteInternalProposal
+    builder.exit("5a34c7e1");
+    
+    builder.init();
+    builder.enter("9661803d"); // GovValidators::createInternalProposal
+    builder.exit("9661803d");
+    
+    builder.init();
+    builder.enter("7b0e1203"); // GovPool::claimMicropoolRewards
+    builder.exit("7b0e1203");
+    
+    builder.init();
+    builder.enter("ea1941d0"); // GovValidators::cancelVoteExternalProposal
+    builder.exit("ea1941d0");
+    
+    builder.init();
+    builder.enter("5478197e"); // GovValidators::cancelVoteInternalProposal
+    builder.exit("5478197e");
+}
+
+function addShortExecutesBatch(builder) {
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("d0def521"); // ERC721Expert::mint
+        builder.exit("d0def521");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("0dbf1c47"); // GovPool::editDescriptionURL
+        builder.exit("0dbf1c47");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("c45e0ae6"); // DistributionProposal::execute
+        builder.exit("c45e0ae6");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("2d141cdd"); // GovSettings::editSettings
+        builder.exit("2d141cdd");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("62a4107d"); // GovValidators::changeBalances
+        builder.exit("62a4107d");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("89afcb44"); // ERC721Expert::burn
+        builder.exit("89afcb44");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("baa7652f"); // GovPool::setCreditInfo
+        builder.exit("baa7652f");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("cfd9c3c3"); // GovPool::changeVotePower
+        builder.exit("cfd9c3c3");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("a43040eb"); // GovPool::setNftMultiplierAddress
+        builder.exit("a43040eb");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("6a11e769"); // GovSettings::addSettings
+        builder.exit("6a11e769");
+        builder.enter("f7e1ef01"); // GovSettings::changeExecutors
+        builder.exit("f7e1ef01");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("65f3f23f"); // GovValidators::executeInternalProposal
+        builder.enter("62a4107d"); // GovValidators::changeBalances
+        builder.exit("62a4107d");
+    builder.exit("65f3f23f");
+    
+    builder.init();
+    builder.enter("65f3f23f"); // GovValidators::executeInternalProposal
+        builder.enter("b395fec0"); // GovValidators::changeSettings
+        builder.exit("b395fec0");
+    builder.exit("65f3f23f");
+    
+    builder.init();
+    builder.enter("65f3f23f"); // GovValidators::executeInternalProposal
+    builder.exit("65f3f23f");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("37e5e863"); // GovUserKeeper::setERC721Address
+        builder.exit("37e5e863");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("fe0d94c1"); // GovPool::execute
+        builder.enter("4ccc2757"); // ERC721Multiplier::changeToken
+        builder.exit("4ccc2757");
+    builder.exit("fe0d94c1");
+    
+    builder.init();
+    builder.enter("2db47bdd"); // GovPool::moveProposalToValidators
+        builder.enter("dc2a7714"); // 
+        builder.exit("dc2a7714");
+    builder.exit("2db47bdd");
+    
+    builder.init();
+    builder.enter("65f3f23f"); // GovValidators::executeInternalProposal
+        builder.enter("3271f009"); // GovValidators::monthlyWithdraw
+            builder.enter("c1e09f97"); // GovPool::transferCreditAmount
+            builder.exit("c1e09f97");
+        builder.exit("3271f009");
+    builder.exit("65f3f23f");
+}
+
 // =================== CORE ===========================
 
 function addBasicCorePatterns(builder) {
@@ -538,6 +704,10 @@ module.exports = {
     addExecuteCancelVoteBatch,
     addExecuteVoteBatch,
 
+    addInitPatternsBatch,
+    addOneLinersBatch,
+    addShortExecutesBatch,
+
     splitIntToBool,
 
     addDelegate,
@@ -552,9 +722,7 @@ module.exports = {
     addExecuteProposalCreation,
     addExecuteCancelVote,
     addExecuteVote,
-    addInitPatternsBatch,
 
     addInjectGPDependenciesBatch,
     addBasicCorePatternsBatch,
-    addNewBuyPatternBatch,
 };

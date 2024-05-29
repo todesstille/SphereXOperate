@@ -38,7 +38,7 @@ ERC721Expert::transferOwnership(address) 0xf2fde38b
 
 TokenSaleProposal::__TokenSaleProposal_init(address) 0x13fb0521
 TokenSaleProposal::addToWhitelist((uint256,address[],string)[]) 0xce6c2d91
-TokenSaleProposal::buy(uint256,address,uint256) 0x2afaca20
+TokenSaleProposal::buy(uint256,address,uint256,bytes32[]) 0xfe49cff8
 TokenSaleProposal::claim(uint256[]) 0x6ba4c138
 TokenSaleProposal::createTiers(((string,string),uint256,uint64,uint64,uint64,address,address[],uint256[],uint256,uint256,(uint256,uint64,uint64,uint64),(uint8,bytes)[])[]) 0x6a6effda
 TokenSaleProposal::lockParticipationNft(uint256,address,uint256[]) 0x1ec3f9b7
